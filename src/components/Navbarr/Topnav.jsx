@@ -6,6 +6,8 @@ import {
   Popover,
   OverlayTrigger,
 } from "react-bootstrap";
+import { IoNotificationsOutline } from "react-icons/io5";
+import { BsEnvelopeFill, BsCoin } from "react-icons/bs";
 import "./topnav.css";
 
 const Topnav = () => {
@@ -24,16 +26,25 @@ const Topnav = () => {
         <Nav className="mr-auto">
           {/* <Nav.Link href="#home">Sing In</Nav.Link>
           <Nav.Link href="#features">Sign Up</Nav.Link> */}
-          <Nav.Link href="#features">Me</Nav.Link>
-          <Nav.Link href="#features">Messages</Nav.Link>
-          <Nav.Link href="#features">Earn coins</Nav.Link>
-          <img
-            src="https://picsum.photos/200"
-            width="30"
-            height="30"
-            className="d-inline-block align-top rounded-circle profile-img"
-            alt="React Bootstrap logo"
-          />
+          <div>
+            <img
+              src="https://picsum.photos/200"
+              width="30"
+              height="30"
+              className="d-inline-block align-top rounded-circle profile-img"
+              alt="React Bootstrap logo"
+            />
+            19 c
+          </div>
+          <Nav.Link href="#features">
+            <IoNotificationsOutline /> Me
+          </Nav.Link>
+          <Nav.Link href="#features">
+            <BsEnvelopeFill /> Messages
+          </Nav.Link>
+          <Nav.Link href="#features">
+            <BsCoin /> Earn coins
+          </Nav.Link>
         </Nav>
         <Navbar.Brand href="#home" className="mr-auto">
           ዘመሩ
