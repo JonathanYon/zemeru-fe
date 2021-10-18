@@ -3,7 +3,7 @@ import SingleBlog from "../single blog/SingleBlog";
 
 const BlogRow = () => {
   return (
-    <Container>
+    <Container className="mt-5">
       <Row xs={4}>
         <Col>
           <SingleBlog />
