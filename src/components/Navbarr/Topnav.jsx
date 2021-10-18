@@ -9,8 +9,11 @@ import {
 import { IoNotificationsOutline } from "react-icons/io5";
 import { BsEnvelopeFill, BsCoin } from "react-icons/bs";
 import "./topnav.css";
+import { useState } from "react";
 
 const Topnav = () => {
+  const [logged, setLogged] = useState(false);
+
   const popover = (
     <Popover id="popover-basic">
       <Popover.Title as="h3">Popover right</Popover.Title>
@@ -20,30 +23,42 @@ const Topnav = () => {
       </Popover.Content>
     </Popover>
   );
+
   return (
     <>
-      <Navbar bg="danger" variant="danger">
+      <Navbar className="mx-5">
         <Nav className="mr-auto">
-          {/* <Nav.Link href="#home">Sing In</Nav.Link>
-          <Nav.Link href="#features">Sign Up</Nav.Link> */}
-          <div>
-            <img
-              src="https://picsum.photos/200"
-              width="30"
-              height="30"
-              className="d-inline-block align-top rounded-circle profile-img"
-              alt="React Bootstrap logo"
-            />
-            19 c
-          </div>
-          <Nav.Link href="#features">
-            <IoNotificationsOutline /> Me
+          {logged && (
+            <>
+              <div>
+                <img
+                  src="https://picsum.photos/200"
+                  width="30"
+                  height="30"
+                  className="d-inline-block align-top rounded-circle profile-img"
+                  alt="React Bootstrap logo"
+                />
+                19 c
+              </div>
+              <Nav.Link href="#features">
+                <IoNotificationsOutline /> Me
+              </Nav.Link>
+              <Nav.Link href="#features">
+                <BsEnvelopeFill /> Messages
+              </Nav.Link>
+              <Nav.Link href="#features">
+                <BsCoin /> Earn coins
+              </Nav.Link>
+            </>
+          )}
+          <Nav.Link href="#pricing" className="pr-3">
+            Home
           </Nav.Link>
-          <Nav.Link href="#features">
-            <BsEnvelopeFill /> Messages
+          <Nav.Link href="#pricing" className="pr-3">
+            Shop
           </Nav.Link>
-          <Nav.Link href="#features">
-            <BsCoin /> Earn coins
+          <Nav.Link href="#pricing" className="pr-3">
+            Post
           </Nav.Link>
         </Nav>
         <Navbar.Brand href="#home" className="mr-auto">
@@ -52,19 +67,19 @@ const Topnav = () => {
 
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <FormControl
+              type="text"
+              placeholder="Search lyrics or blog"
+              className="mr-sm-2"
+            />
           </Form>
         </OverlayTrigger>
-      </Navbar>
-      <Navbar bg="dark" variant="dark">
-        <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-        </Nav>
+        {!logged && (
+          <>
+            <Nav.Link href="#home">Sing In</Nav.Link>
+            <Nav.Link href="#features">Sign Up</Nav.Link>
+          </>
+        )}
       </Navbar>
     </>
   );
