@@ -1,14 +1,20 @@
 import "./App.css";
+import AddLyrics from "./components/addContent/addLyrics/AddLyrics";
 import BlogRow from "./components/home/blogRow/Blogrow";
-import LyricsChart from "./components/home/lyrics chart/LyricsChart";
+import LyricsChart from "./components/home/charts/lyrics chart/LyricsChart";
+import UserChart from "./components/home/charts/user chart/UserChart";
+import Me from "./components/me/Me";
 import Topnav from "./components/Navbarr/Topnav";
 
 function App() {
   return (
     <div className="App">
       <Topnav />
-      <BlogRow />
+      {/* <BlogRow />
       <LyricsChart />
+      <UserChart /> */}
+      {/* <Me /> */}
+      <AddLyrics />
     </div>
   );
 }

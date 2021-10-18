@@ -1,0 +1,14 @@
+.photo {
+  width: 14vw;
+  height: 14vw;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 5%;
+  object-fit: cover;
+}
+.follow {
+  position: absolute;
+  top: 42%;
+  left: 38%;
+}
