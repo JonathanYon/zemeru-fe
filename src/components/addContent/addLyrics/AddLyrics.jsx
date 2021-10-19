@@ -53,10 +53,10 @@ const AddLyrics = () => {
             </Form.Group>
           </Form>
         </Col>
-        <Col>
+        <Col className="mt-5">
           <h5>First time transcribing</h5>
           <p>Here is a "How to.." guide</p>
-          <ol>
+          <ol className="text-left">
             <li>
               Type out all lyrics, even when a section of the song is repeated.
               Everything in the song should be transcribed, including adlibs,
