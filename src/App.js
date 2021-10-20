@@ -1,4 +1,5 @@
 import "./App.css";
+import AddBlog from "./components/addContent/addBlog/AddBlog";
 import AddLyrics from "./components/addContent/addLyrics/AddLyrics";
 import BlogRow from "./components/home/blogRow/Blogrow";
 import LyricsChart from "./components/home/charts/lyrics chart/LyricsChart";
@@ -10,11 +11,12 @@ function App() {
   return (
     <div className="App">
       <Topnav />
-      {/* <BlogRow />
+      <BlogRow />
       <LyricsChart />
-      <UserChart /> */}
+      <UserChart />
       {/* <Me /> */}
-      <AddLyrics />
+      {/* <AddLyrics /> */}
+      {/* <AddBlog /> */}
     </div>
   );
 }
