@@ -17,8 +17,8 @@ function App() {
       <Router>
         <Switch>
           {/* <Topnav /> */}
-          <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={SignUp} />
+          <Route exact path="/" component={Login} />
 
           {/* <BlogRow /> */}
           {/* <LyricsChart /> */}
@@ -26,7 +26,7 @@ function App() {
           {/* <Me /> */}
           {/* <AddLyrics /> */}
           {/* <AddBlog /> */}
-          <Route component={NotFound} />
+          {/* <Route component={NotFound} /> */}
         </Switch>
       </Router>
     </div>

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { withRouter } from "react-router";
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [info, setInfo] = useState({
     username: "",
     email: "",
@@ -17,8 +18,24 @@ const SignUp = () => {
       [id]: value,
     }));
   };
+
+  const register = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`${process.env.REACT_APP_URL}/users/account`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(info),
+    });
+    if (response.ok) {
+      props.history.push("/");
+    } else {
+      alert("something wrong");
+    }
+  };
   return (
-    <Form>
+    <Form onSubmit={register}>
       <Form.Group>
         <Form.Label>User name</Form.Label>
         <Form.Control
@@ -58,4 +75,4 @@ const SignUp = () => {
     </Form>
   );
 };
-export default SignUp;
+export default withRouter(SignUp);
