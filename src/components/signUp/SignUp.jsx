@@ -2,6 +2,19 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const SignUp = () => {
+  const [info, setInfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setInfo((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
   return (
     <Form>
       <Form.Group controlId="formBasicUserName">
