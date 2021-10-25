@@ -8,6 +8,8 @@ const SignUp = () => {
     password: "",
   });
 
+  console.log(info.username);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setInfo((prevState) => ({
@@ -17,22 +19,22 @@ const SignUp = () => {
   };
   return (
     <Form>
-      <Form.Group controlId="formBasicUserName">
+      <Form.Group>
         <Form.Label>User name</Form.Label>
         <Form.Control
           type="text"
+          id="username"
           placeholder="UserName"
-          id="userName"
           value={info.username}
           onChange={handleChange}
         />
       </Form.Group>
-      <Form.Group controlId="formBasicEmail">
+      <Form.Group>
         <Form.Label>Email address</Form.Label>
         <Form.Control
           type="email"
-          placeholder="Enter email"
           id="email"
+          placeholder="Enter email"
           value={info.email}
           onChange={handleChange}
         />
@@ -40,12 +42,12 @@ const SignUp = () => {
           We'll never share your email with anyone else.
         </Form.Text>
       </Form.Group>
-      <Form.Group controlId="formBasicPassword">
+      <Form.Group>
         <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
-          placeholder="Password"
           id="password"
+          placeholder="Password"
           value={info.password}
           onChange={handleChange}
         />
