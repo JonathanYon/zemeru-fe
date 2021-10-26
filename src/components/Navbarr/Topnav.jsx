@@ -1,4 +1,6 @@
 import {
+  Dropdown,
+  DropdownButton,
   Nav,
   Form,
   FormControl,
@@ -9,11 +11,14 @@ import {
 import { IoNotificationsOutline } from "react-icons/io5";
 import { BsEnvelopeFill, BsCoin } from "react-icons/bs";
 import "./topnav.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { myLogin } from "../../Redux/action";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 
-const Topnav = () => {
-  const [logged, setLogged] = useState(false);
-
+const Topnav = ({ props }) => {
   const popover = (
     <Popover id="popover-basic">
       <Popover.Title as="h3">Popover right</Popover.Title>
@@ -23,24 +28,28 @@ const Topnav = () => {
       </Popover.Content>
     </Popover>
   );
-
+  const me = useSelector((state) => state.user.me);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(myLogin());
+  }, []);
+  console.log("props", me);
   return (
     <>
       <Navbar className="mx-5">
         <Nav className="mr-auto">
-          {logged && (
+          {me && (
             <>
               <div>
                 <img
-                  src="https://picsum.photos/200"
+                  src={me ? me.avatar : "https://picsum.photos/200"}
                   width="30"
                   height="30"
                   className="d-inline-block align-top rounded-circle profile-img"
                   alt="React Bootstrap logo"
                 />
-                19 c
               </div>
-              <Nav.Link href="#features">
+              {/* <Nav.Link href="#features">
                 <IoNotificationsOutline /> Me
               </Nav.Link>
               <Nav.Link href="#features">
@@ -48,7 +57,7 @@ const Topnav = () => {
               </Nav.Link>
               <Nav.Link href="#features">
                 <BsCoin /> Earn coins
-              </Nav.Link>
+              </Nav.Link> */}
             </>
           )}
           <Nav.Link href="#pricing" className="pr-3">
@@ -57,9 +66,14 @@ const Topnav = () => {
           <Nav.Link href="#pricing" className="pr-3">
             Shop
           </Nav.Link>
-          <Nav.Link href="#pricing" className="pr-3">
+          {/* <Nav.Link href="#pricing" className="pr-3">
             Post
-          </Nav.Link>
+          </Nav.Link> */}
+          <DropdownButton id="dropdown-basic-button" title="Post">
+            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+          </DropdownButton>
         </Nav>
         <Navbar.Brand href="#home" className="mr-auto">
           ዘመሩ
@@ -74,14 +88,19 @@ const Topnav = () => {
             />
           </Form>
         </OverlayTrigger>
-        {!logged && (
+        {!me && (
           <>
-            <Nav.Link href="#home">Sing In</Nav.Link>
-            <Nav.Link href="#features">Sign Up</Nav.Link>
+            <Link to="/login">
+              <Nav.Link href="#home">Sing In</Nav.Link>
+            </Link>
+            <Link to="/register">
+              <Nav.Link href="#features">Sign Up</Nav.Link>
+            </Link>
           </>
         )}
       </Navbar>
+      <hr />
     </>
   );
 };
-export default Topnav;
+export default withRouter(Topnav);
