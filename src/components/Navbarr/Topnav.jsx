@@ -19,12 +19,24 @@ import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
 const Topnav = ({ props }) => {
+  const [query, setQuery] = useState("");
+  const [result, setResult] = useState([]);
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Title as="h3">Popover right</Popover.Title>
+      <Popover.Title as="h3">Search Result</Popover.Title>
       <Popover.Content>
-        And here's some <strong>amazing</strong> content. It's very engaging.
-        right?
+        {result?.map((lyric) => (
+          <div>
+            <span>
+              {lyric.title} መዝሙር ብ {lyric.artist}
+            </span>
+            <hr />
+            <div
+              dangerouslySetInnerHTML={{ __html: lyric.officialLyric }}
+            ></div>
+            {/* {lyric.officialLyric} */}
+          </div>
+        ))}
       </Popover.Content>
     </Popover>
   );
@@ -33,7 +45,17 @@ const Topnav = ({ props }) => {
   useEffect(() => {
     dispatch(myLogin());
   }, []);
-  console.log("props", me);
+  useEffect(() => {
+    const getAllLyrics = async () => {
+      try {
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllLyrics();
+  }, [query]);
+  console.log("query", query);
+  console.log("result", result);
   return (
     <>
       <Navbar className="mx-5">
@@ -49,20 +71,13 @@ const Topnav = ({ props }) => {
                   alt="React Bootstrap logo"
                 />
               </div>
-              {/* <Nav.Link href="#features">
-                <IoNotificationsOutline /> Me
-              </Nav.Link>
-              <Nav.Link href="#features">
-                <BsEnvelopeFill /> Messages
-              </Nav.Link>
-              <Nav.Link href="#features">
-                <BsCoin /> Earn coins
-              </Nav.Link> */}
             </>
           )}
-          <Nav.Link href="#pricing" className="pr-3">
-            Home
-          </Nav.Link>
+          <Link to="/">
+            <Nav.Link href="#pricing" className="pr-3">
+              Home
+            </Nav.Link>
+          </Link>
           <Nav.Link href="#pricing" className="pr-3">
             Shop
           </Nav.Link>
@@ -70,9 +85,12 @@ const Topnav = ({ props }) => {
             Post
           </Nav.Link> */}
           <DropdownButton id="dropdown-basic-button" title="Post">
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            <Link to="/addLyrics">
+              <Dropdown.Item href="#/action-1">Add song</Dropdown.Item>
+            </Link>
+            <Link to="/addBlog">
+              <Dropdown.Item href="#/action-2">Add Blog</Dropdown.Item>
+            </Link>
           </DropdownButton>
         </Nav>
         <Navbar.Brand href="#home" className="mr-auto">
@@ -85,6 +103,8 @@ const Topnav = ({ props }) => {
               type="text"
               placeholder="Search lyrics or blog"
               className="mr-sm-2"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
           </Form>
         </OverlayTrigger>
