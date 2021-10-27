@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { meReducer } from "../reducer";
+import { blogsReducer } from "../reducer/blogs";
 
 export const initialState = {
   user: {
@@ -8,10 +9,16 @@ export const initialState = {
     error: false,
     loading: true,
   },
+  blogs: {
+    articles: [],
+    error: false,
+    loading: true,
+  },
 };
 
 const rootReducer = combineReducers({
   user: meReducer,
+  blogs: blogsReducer,
 });
 
 const configStore = createStore(
