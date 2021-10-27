@@ -48,6 +48,22 @@ const Topnav = ({ props }) => {
   useEffect(() => {
     const getAllLyrics = async () => {
       try {
+        const response = await fetch(
+          `${process.env.REACT_APP_URL}/lyrics?officialLyric=${
+            query.indexOf(" ") ? decodeURI(query) : query
+          }`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const res = await response.json();
+          console.log(res);
+          setResult(res);
+        }
       } catch (error) {
         console.log(error);
       }
