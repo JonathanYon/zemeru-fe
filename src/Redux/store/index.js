@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { meReducer } from "../reducer";
 import { blogsReducer } from "../reducer/blogs";
+import { lyricsReducer } from "../reducer/lyrics";
 
 export const initialState = {
   user: {
@@ -14,11 +15,17 @@ export const initialState = {
     error: false,
     loading: true,
   },
+  allLyrics: {
+    lyrics: [],
+    error: false,
+    loading: true,
+  },
 };
 
 const rootReducer = combineReducers({
   user: meReducer,
   blogs: blogsReducer,
+  allLyrics: lyricsReducer,
 });
 
 const configStore = createStore(
