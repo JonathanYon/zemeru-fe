@@ -35,7 +35,7 @@ const BlogRow = () => {
       <Row md={5} sm={4} className="d-md-flex">
         {blogs.map((blogData) => (
           // <Col className="d-md-flex" key={blogData._id}>
-          <SingleBlog blog={blogData} />
+          <SingleBlog blog={blogData} key={blogData._id} />
           /* </Col> */
         ))}
       </Row>

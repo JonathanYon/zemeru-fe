@@ -1,34 +1,24 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { myLyrics } from "../../../../Redux/action";
 
 const UserChart = () => {
-  const [contributer, setContributer] = useState([]);
+  const contributer = useSelector((state) => state.allLyrics.lyrics);
+
+  const userID = [...new Set(contributer.map((user) => user.userId))];
+  const uniqueUser = (data, key) => {
+    return [...new Map(data.map((x) => [key(x), x])).values()];
+  };
+  const editors = uniqueUser(userID, (it) => it._id);
+  console.log("repeate", userID);
+  console.log("unique", editors);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getContributers = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_URL}/lyrics/all`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-            },
-          }
-        );
-        if (response.ok) {
-          const res = await response.json();
-          console.log("users", res);
-          setContributer(res);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getContributers();
+    dispatch(myLyrics());
   }, []);
-
-  contributer.map((user) => console.log(user.userId));
 
   return (
     <Container className="mt-5">
@@ -44,11 +34,13 @@ const UserChart = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>3</td>
-                <td colSpan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              {editors.map((user, i) => (
+                <tr>
+                  <td>{i + 1}</td>
+                  <td colSpan="2">{user.username}</td>
+                  <td>@twitter</td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         </Col>

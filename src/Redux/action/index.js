@@ -89,7 +89,6 @@ export const myLyrics = () => {
       });
       if (response.ok) {
         const res = await response.json();
-        console.log("inAction", res);
         dispatch({
           type: LOADING_LYRICS,
           payload: false,
