@@ -21,17 +21,24 @@ const SignUp = (props) => {
 
   const register = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${process.env.REACT_APP_URL}/users/account`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(info),
-    });
-    if (response.ok) {
-      props.history.push("/");
-    } else {
-      alert("something wrong");
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/users/account`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(info),
+        }
+      );
+      if (response.ok) {
+        props.history.push("/login");
+      } else {
+        alert("something wrong");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
