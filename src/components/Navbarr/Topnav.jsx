@@ -28,13 +28,12 @@ const Topnav = ({ props }) => {
         {result?.map((lyric) => (
           <div>
             <span>
-              {lyric.title} መዝሙር ብ {lyric.artist}
+              <Link to="/lyric">
+                <strong>{lyric.title}</strong>
+              </Link>{" "}
+              መዝሙር ብ <i>{lyric.artist}</i>:
             </span>
             <hr />
-            <div
-              dangerouslySetInnerHTML={{ __html: lyric.officialLyric }}
-            ></div>
-            {/* {lyric.officialLyric} */}
           </div>
         ))}
       </Popover.Content>
@@ -78,15 +77,17 @@ const Topnav = ({ props }) => {
         <Nav className="mr-auto">
           {me && (
             <>
-              <div>
-                <img
-                  src={me ? me.avatar : "https://picsum.photos/200"}
-                  width="30"
-                  height="30"
-                  className="d-inline-block align-top rounded-circle profile-img"
-                  alt="React Bootstrap logo"
-                />
-              </div>
+              <Link to="/me">
+                <div>
+                  <img
+                    src={me ? me.avatar : "https://picsum.photos/200"}
+                    width="30"
+                    height="30"
+                    className="d-inline-block align-top rounded-circle profile-img"
+                    alt="React Bootstrap logo"
+                  />
+                </div>
+              </Link>
             </>
           )}
           <Link to="/">
