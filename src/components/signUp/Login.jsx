@@ -18,22 +18,26 @@ const Login = (props) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${process.env.REACT_APP_URL}/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(login),
-    });
-    if (response.ok) {
-      alert("LOGIN!!!!");
+    try {
+      const response = await fetch(`${process.env.REACT_APP_URL}/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(login),
+      });
+      if (response.ok) {
+        alert("LOGIN!!!!");
 
-      props.history.push("/home");
-      const res = await response.json();
-      window.localStorage.setItem("Token", res.accessToken);
-      console.log(res);
-    } else {
-      alert("something wrong");
+        props.history.push("/");
+        const res = await response.json();
+        window.localStorage.setItem("Token", res.accessToken);
+        console.log(res);
+      } else {
+        alert("something wrong");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
