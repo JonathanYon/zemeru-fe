@@ -28,7 +28,7 @@ const Topnav = ({ props }) => {
         {result?.map((lyric) => (
           <div>
             <span>
-              <Link to="/lyric">
+              <Link to={`/lyric/${lyric._id}`}>
                 <strong>{lyric.title}</strong>
               </Link>{" "}
               መዝሙር ብ <i>{lyric.artist}</i>:
@@ -42,6 +42,7 @@ const Topnav = ({ props }) => {
   const me = useSelector((state) => state.user.me);
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("topnav");
     dispatch(myLogin());
   }, []);
   useEffect(() => {
@@ -60,7 +61,7 @@ const Topnav = ({ props }) => {
         );
         if (response.ok) {
           const res = await response.json();
-          console.log(res);
+          // console.log(res);
           setResult(res);
         }
       } catch (error) {
@@ -69,8 +70,8 @@ const Topnav = ({ props }) => {
     };
     getAllLyrics();
   }, [query]);
-  console.log("query", query);
-  console.log("result", result);
+  // console.log("query", query);
+  // console.log("result", result);
   return (
     <>
       <Navbar className="mx-5">

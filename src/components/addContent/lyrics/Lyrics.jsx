@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col, Jumbotron } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { FaThumbsUp } from "react-icons/fa";
-import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+import ContentEditable from "react-contenteditable";
 
 const Lyrics = (props) => {
   const [lyric, setLyric] = useState(null);
+  const [html, setHtml] = useState(null);
 
   const { id } = props.match.params;
 
@@ -25,6 +25,7 @@ const Lyrics = (props) => {
         const res = await response.json();
         console.log("Lyric,jsx", res);
         setLyric(res);
+        setHtml(res.officialLyric);
       }
     };
     getLyric();
@@ -62,13 +63,15 @@ const Lyrics = (props) => {
         </div>
       </Jumbotron>
 
-      <Container>
+      <Container className="mb-5">
         <Row>
           <Col xs={6}>
-            <div
-              dangerouslySetInnerHTML={{ __html: lyric?.officialLyric }}
-              style={{ lineHeight: "2px" }}
-            ></div>
+            <h3 className="my-4">{lyric?.title}</h3>
+            <ContentEditable
+              html={html}
+              disabled={true}
+              onChange={(e) => setHtml(e.target.value)}
+            />
           </Col>
           <Col xs={6}>
             <div className="row d-flex justify-content-center">

@@ -9,10 +9,13 @@ import Login from "./components/signUp/Login";
 import SignUp from "./components/signUp/SignUp";
 import NotFound from "./components/home/notFound/NotFound";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import BlogContent from "./components/home/blogRow/single-blog/BlogContent";
 import Lyrics from "./components/addContent/lyrics/Lyrics";
 function App() {
   const [logged, setLogged] = useState(false);
+
+  const me = useSelector((state) => state.user.me);
 
   return (
     <div className="App">
@@ -23,7 +26,12 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/" component={BlogRow} />
         <Route exact path="/blogs/:id" component={BlogContent} />
-        <Route exact path="/me" component={Me} />
+        <Route
+          exact
+          path="/me"
+          render={(routeProps) => <Me me={me} {...routeProps} />}
+        />
+
         <Route exact path="/lyric/:id" component={Lyrics} />
         {/* <BlogRow /> */}
         {/* <BlogRow />*/}

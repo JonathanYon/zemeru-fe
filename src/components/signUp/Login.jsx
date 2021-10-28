@@ -28,8 +28,8 @@ const Login = (props) => {
       });
       if (response.ok) {
         alert("LOGIN!!!!");
-
         props.history.push("/");
+        window.location.reload();
         const res = await response.json();
         window.localStorage.setItem("Token", res.accessToken);
         console.log(res);

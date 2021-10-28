@@ -1,10 +1,8 @@
 import { Jumbotron, Container, Row, Col, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
 import LeftCard from "./card/LeftCard";
 import "./me.css";
 
-const Me = () => {
-  const me = useSelector((state) => state.user.me);
+const Me = ({ me }) => {
   return (
     <>
       <Jumbotron
@@ -25,7 +23,7 @@ const Me = () => {
           <div className="my-photo ">
             <img
               // src="https://www.gannett-cdn.com/-mm-/fd5c5b5393c72a785789f0cd5bd20acedd2d2804/c=0-350-2659-1850/local/-/media/Phoenix/BillGoodykoontz/2014/04/24//1398388295000-Homer-Simpson.jpg"
-              src={me.cover}
+              src={me?.cover}
               alt=""
               className="photo"
             />
@@ -41,7 +39,7 @@ const Me = () => {
       <Container>
         <Row>
           <Col xs={4}>
-            <h5>@{me.username}</h5>
+            <h5>@{me?.username}</h5>
             <Button className="bg-light text-black-50 mb-2">Edit</Button>
             <LeftCard />
             <LeftCard />

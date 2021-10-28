@@ -7,6 +7,7 @@ export const BLOGS = "BLOGS";
 
 export const myLogin = () => {
   return async (dispatch) => {
+    console.log("here---");
     try {
       const response = await fetch(`${process.env.REACT_APP_URL}/users/me`, {
         headers: {
@@ -15,7 +16,7 @@ export const myLogin = () => {
       });
       if (response.ok) {
         const res = await response.json();
-        console.log(res);
+        console.log("in Action", res);
         dispatch({
           type: LOADING_ME,
           payload: false,
@@ -50,7 +51,7 @@ export const myBlogs = () => {
       });
       if (response.ok) {
         const res = await response.json();
-        console.log(res);
+        console.log("inAction", res);
         dispatch({
           type: LOADING_BLOG,
           payload: false,
