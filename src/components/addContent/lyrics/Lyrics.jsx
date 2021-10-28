@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Jumbotron } from "react-bootstrap";
+import { Container, Row, Col, Jumbotron, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { FaThumbsUp } from "react-icons/fa";
 import ContentEditable from "react-contenteditable";
@@ -7,8 +7,18 @@ import ContentEditable from "react-contenteditable";
 const Lyrics = (props) => {
   const [lyric, setLyric] = useState(null);
   const [html, setHtml] = useState(null);
+  const [edit, setEdit] = useState(true);
 
   const { id } = props.match.params;
+
+  const jwtId = (token) => {
+    if (!token) {
+      return;
+    }
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+  };
 
   useEffect(() => {
     const getLyric = async () => {
@@ -30,6 +40,28 @@ const Lyrics = (props) => {
     };
     getLyric();
   }, [id]);
+
+  const editLyrics = async () => {
+    const payload = {
+      updatedLyric: html,
+      userId: jwtId(window.localStorage.getItem("Token"))._id,
+    };
+    const respo = await fetch(
+      `${process.env.REACT_APP_URL}/lyrics/updateLyrics/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    if (respo.ok) {
+      alert("Thank you");
+      setEdit(!edit);
+    }
+  };
   return (
     <>
       <Jumbotron
@@ -66,10 +98,19 @@ const Lyrics = (props) => {
       <Container className="mb-5">
         <Row>
           <Col xs={6}>
+            {edit ? (
+              <Button variant="secondary" onClick={() => setEdit(!edit)}>
+                Edit Lyrics
+              </Button>
+            ) : (
+              <Button variant="secondary" onClick={editLyrics}>
+                Propose correction
+              </Button>
+            )}
             <h3 className="my-4">{lyric?.title}</h3>
             <ContentEditable
               html={html}
-              disabled={true}
+              disabled={edit}
               onChange={(e) => setHtml(e.target.value)}
             />
           </Col>
