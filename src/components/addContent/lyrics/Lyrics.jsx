@@ -39,7 +39,7 @@ const Lyrics = (props) => {
       }
     };
     getLyric();
-  }, [id]);
+  }, [id, edit]);
 
   const editLyrics = async () => {
     const payload = {
@@ -103,9 +103,14 @@ const Lyrics = (props) => {
                 Edit Lyrics
               </Button>
             ) : (
-              <Button variant="secondary" onClick={editLyrics}>
-                Propose correction
-              </Button>
+              <div>
+                <Button variant="success" onClick={editLyrics}>
+                  Propose correction
+                </Button>
+                <Button variant="dark" onClick={() => setEdit(!edit)}>
+                  Cancel
+                </Button>
+              </div>
             )}
             <h3 className="my-4">{lyric?.title}</h3>
             <ContentEditable
