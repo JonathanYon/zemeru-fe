@@ -1,6 +1,7 @@
 import { Col, Container, Row, Table } from "react-bootstrap";
 
 const LyricsChart = () => {
+  
   return (
     <Container className="mt-5">
       <Row>
