@@ -1,4 +1,4 @@
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useState } from "react";
@@ -8,22 +8,88 @@ import "react-datepicker/dist/react-datepicker.css";
 const AddBlog = () => {
   const [startDate, setStartDate] = useState(new Date());
 
+  const [contents, setContents] = useState({
+    category: "",
+    title: "",
+    cover: "",
+    authors: "",
+    content: "",
+  });
+
+  const handleChange = (key, value) => {
+    setContents({ ...contents, [key]: value });
+  };
+  const handleChangeQuill = (value) => {
+    setContents({ ...contents, officialLyric: value });
+  };
+
+  // const handleChange = (e) => {
+  //   const { id, value } = e.target;
+  //   setContents((prevState) => ({
+  //     ...prevState,
+  //     [id]: value,
+  //   }));
+  // };
+
+  const handleBlog = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${process.env.REACT_APP_URL}/lyrics`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(contents),
+      });
+      if (response.ok) {
+        alert("Great");
+
+        // props.history.push("/");
+        const res = await response.json();
+        // window.localStorage.setItem("Token", res.accessToken);
+        console.log(res);
+      } else {
+        alert("something wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <Row>
         <Col xs={6}>
-          <Form>
-            <Form.Group controlId="formGroupBy">
+          <Form onSubmit={handleBlog}>
+            <Form.Group>
               <Form.Label>By</Form.Label>
-              <Form.Control type="text" placeholder="The artist/writer" />
+              <Form.Control
+                type="text"
+                id="artist"
+                placeholder="The artist/writer"
+                onChange={(e) => handleChange("artist", e.target.value)}
+                value={contents.artist}
+              />
             </Form.Group>
-            <Form.Group controlId="formGroupTitle">
+            <Form.Group>
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" placeholder="Title" />
+              <Form.Control
+                type="text"
+                id="title"
+                placeholder="Title"
+                onChange={(e) => handleChange("title", e.target.value)}
+                value={contents.title}
+              />
             </Form.Group>
-            <Form.Group controlId="exampleForm.ControlSelect2">
-              <Form.Label>Example multiple select</Form.Label>
-              <Form.Control as="select">
+            <Form.Group>
+              <Form.Label>Type</Form.Label>
+              <Form.Control
+                as="select"
+                id="mezmurType"
+                onChange={(e) => handleChange("mezmurType", e.target.value)}
+                value={contents.mezmurType}
+              >
                 <option>ልመና</option>
                 <option>ንስሓ</option>
                 <option>ምስጋና</option>
@@ -31,24 +97,33 @@ const AddBlog = () => {
                 <option>ድ.ማርያም</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="blog-content" className="mt-3">
-              <Form.Label>Blog Content</Form.Label>
-              <ReactQuill className="bg-light" />
-            </Form.Group>
-            <Form.Group controlId="formGroupLink">
+            {/* <Form.Group className="mt-3"> */}
+            <Form.Label>Blog Content</Form.Label>
+            <ReactQuill
+              id="officialLyric"
+              className="bg-light"
+              value={contents.officialLyric}
+              onChange={handleChangeQuill}
+            />
+            {/* </Form.Group> */}
+            <Form.Group>
               <Form.Label>YouTube Link</Form.Label>
               <Form.Control
                 type="text"
+                id="youtubeLink"
                 placeholder="www.youtube.com/3223bjik"
+                onChange={(e) => handleChange("youtubeLink", e.target.value)}
+                value={contents.youtubeLink}
               />
             </Form.Group>
-            <Form.Group controlId="formGroupDate">
+            <Form.Group id="formGroupDate">
               <Form.Label>Release Date</Form.Label>
               <DatePicker
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
               />
             </Form.Group>
+            <Button type="submit">Submit</Button>
           </Form>
         </Col>
         <Col className="mt-5">
