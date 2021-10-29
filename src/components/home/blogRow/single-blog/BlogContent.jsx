@@ -33,9 +33,12 @@ const BlogContent = (props) => {
   return (
     <Container>
       <h1>{article.title}</h1>
-      <Image src={article.cover} fluid />
-      <Row>
-        <Col>{article.content}</Col>
+      <Image src={article.cover} style={{ width: "50%", height: "50%" }} />
+      <Row className="mt-5 mb-5">
+        <Col>
+          <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
+          {/* {article.content} */}
+        </Col>
       </Row>
     </Container>
   );
