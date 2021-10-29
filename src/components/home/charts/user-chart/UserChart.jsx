@@ -36,7 +36,20 @@ const UserChart = () => {
             <tbody>
               {editors.map((user, i) => (
                 <tr>
-                  <td>{i + 1}</td>
+                  <td>
+                    {/* {i + 1} */}
+                    {i + 1}.
+                    <img
+                      src={user.avatar}
+                      alt="mezmur cover photo"
+                      className="rounded-circle ml-1"
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </td>
                   <td colSpan="2">{user.username}</td>
                   <td>@twitter</td>
                 </tr>
