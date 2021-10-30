@@ -2,10 +2,15 @@ import { useState, useEffect } from "react";
 import OneComment from "./OneComment";
 import { withRouter } from "react-router";
 import { Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { getComments } from "../../../Redux/action";
+import { useSelector } from "react-redux";
 
 const Comments = (props) => {
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
+  const comments = useSelector((state) => state.lyricsComments.comments);
+  const dispatch = useDispatch();
+  const { id } = props.match.params;
 
   const submitComment = async (e) => {
     e.preventDefault();
@@ -13,7 +18,6 @@ const Comments = (props) => {
       comment,
     };
     try {
-      const { id } = props.match.params;
       const response = await fetch(
         `${process.env.REACT_APP_URL}/lyrics/post/${id}`,
         {
@@ -28,7 +32,7 @@ const Comments = (props) => {
       if (response.ok) {
         // alert("commented");
         const resp = await response.json();
-        setComments(comments.concat(resp));
+        comments.unshift(resp);
         setComment("");
       } else {
         alert("something Wrong");
@@ -36,34 +40,11 @@ const Comments = (props) => {
     } catch (error) {
       console.log(error);
     }
-    //-------------------------------------------------------------------
-    const getComments = async () => {
-      try {
-        const { id } = props.match.params;
-        const response = await fetch(
-          `${process.env.REACT_APP_URL}/lyrics/post/${id}/comments`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-            },
-          }
-        );
-        if (response.ok) {
-          const res = await response.json();
-          setComments(res);
-        } else {
-          alert("something Wrong");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getComments();
   };
-  // useEffect(() => {
-
-  // }, []);
+  useEffect(() => {
+    // const { id } = props.match.params;
+    dispatch(getComments(id));
+  }, []);
 
   return (
     // <div className="row d-flex justify-content-center">
