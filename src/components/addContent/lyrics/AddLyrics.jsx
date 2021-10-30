@@ -4,16 +4,8 @@ import ReactQuill from "react-quill";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { jwtId } from "../../../utils";
 const AddLyrics = () => {
-  const jwtId = (token) => {
-    if (!token) {
-      return;
-    }
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace("-", "+").replace("_", "/");
-    return JSON.parse(window.atob(base64));
-  };
   // console.log("id", jwtId(window.localStorage.getItem("Token"))._id);
 
   const [startDate, setStartDate] = useState(new Date());
@@ -43,7 +35,7 @@ const AddLyrics = () => {
   //   }));
   // };
 
-  const handleBlog = async (e) => {
+  const handlelyrics = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch(`${process.env.REACT_APP_URL}/lyrics`, {
@@ -73,7 +65,7 @@ const AddLyrics = () => {
     <Container>
       <Row>
         <Col xs={6}>
-          <Form onSubmit={handleBlog}>
+          <Form onSubmit={handlelyrics}>
             <Form.Group>
               <Form.Label>By</Form.Label>
               <Form.Control
