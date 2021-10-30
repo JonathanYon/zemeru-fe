@@ -6,7 +6,37 @@ import { Button } from "react-bootstrap";
 const Comments = (props) => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
-  useEffect(() => {
+
+  const submitComment = async (e) => {
+    e.preventDefault();
+    const payload = {
+      comment,
+    };
+    try {
+      const { id } = props.match.params;
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/lyrics/post/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          method: "POST",
+          body: JSON.stringify(payload),
+        }
+      );
+      if (response.ok) {
+        // alert("commented");
+        const resp = await response.json();
+        setComments(comments.concat(resp));
+        setComment("");
+      } else {
+        alert("something Wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    //-------------------------------------------------------------------
     const getComments = async () => {
       try {
         const { id } = props.match.params;
@@ -30,36 +60,10 @@ const Comments = (props) => {
       }
     };
     getComments();
-  }, []);
-
-  const submitComment = async (e) => {
-    e.preventDefault();
-    const payload = {
-      comment,
-    };
-    try {
-      const { id } = props.match.params;
-      const response = await fetch(
-        `${process.env.REACT_APP_URL}/lyrics/post/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-          },
-          method: "POST",
-          body: JSON.stringify(payload),
-        }
-      );
-      if (response.ok) {
-        alert("commented");
-        setComment("");
-      } else {
-        alert("something Wrong");
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     // <div className="row d-flex justify-content-center">
@@ -84,8 +88,8 @@ const Comments = (props) => {
             </Button>
           </form>
         </div>
-        {comments.map((comment) => (
-          <OneComment comment={comment} key={comment._id} />
+        {comments.map((aComment) => (
+          <OneComment comment={aComment} key={aComment._id} />
         ))}
       </div>
     </div>
