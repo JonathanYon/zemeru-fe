@@ -7,6 +7,9 @@ export const BLOGS = "BLOGS";
 export const LOADING_LYRICS = "LOADING_LYRICS";
 export const ERROR_LYRICS = "ERROR_LYRICS";
 export const LYRICS = "LYRICS";
+export const LOADING_COMMENTS = "LOADING_COMMENTS";
+export const ERROR_COMMENTS = "ERROR_COMMENTS";
+export const COMMENTS = "COMMENTS";
 
 export const myLogin = () => {
   return async (dispatch) => {
@@ -107,6 +110,46 @@ export const myLyrics = () => {
       console.log(error);
       dispatch({
         type: ERROR_LYRICS,
+        payload: true,
+      });
+    }
+  };
+};
+
+//comments in lyrics
+export const getComments = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/lyrics/post/${id}/comments`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const res = await response.json();
+        dispatch({
+          type: LOADING_COMMENTS,
+          payload: false,
+        });
+        dispatch({
+          type: COMMENTS,
+          payload: res,
+        });
+      } else {
+        alert("something Wrong");
+        dispatch({
+          type: ERROR_COMMENTS,
+          payload: true,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: ERROR_COMMENTS,
         payload: true,
       });
     }
