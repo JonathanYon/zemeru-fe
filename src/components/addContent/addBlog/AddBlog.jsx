@@ -2,17 +2,15 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { jwtId } from "../../../utils";
 
 const AddBlog = () => {
-  const [startDate, setStartDate] = useState(new Date());
-
   const [contents, setContents] = useState({
     category: "",
     title: "",
     cover: "",
-    authors: "",
+    youtubeLink: "",
+    authors: jwtId(window.localStorage.getItem("Token"))._id,
     content: "",
   });
 
@@ -20,7 +18,7 @@ const AddBlog = () => {
     setContents({ ...contents, [key]: value });
   };
   const handleChangeQuill = (value) => {
-    setContents({ ...contents, officialLyric: value });
+    setContents({ ...contents, content: value });
   };
 
   // const handleChange = (e) => {
@@ -34,7 +32,7 @@ const AddBlog = () => {
   const handleBlog = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${process.env.REACT_APP_URL}/lyrics`, {
+      const response = await fetch(`${process.env.REACT_APP_URL}/blogs`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
@@ -63,13 +61,13 @@ const AddBlog = () => {
         <Col xs={6}>
           <Form onSubmit={handleBlog}>
             <Form.Group>
-              <Form.Label>By</Form.Label>
+              <Form.Label>Category</Form.Label>
               <Form.Control
                 type="text"
-                id="artist"
-                placeholder="The artist/writer"
-                onChange={(e) => handleChange("artist", e.target.value)}
-                value={contents.artist}
+                id="category"
+                placeholder="Category"
+                onChange={(e) => handleChange("category", e.target.value)}
+                value={contents.category}
               />
             </Form.Group>
             <Form.Group>
@@ -83,26 +81,20 @@ const AddBlog = () => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Type</Form.Label>
+              <Form.Label>cover</Form.Label>
               <Form.Control
-                as="select"
-                id="mezmurType"
-                onChange={(e) => handleChange("mezmurType", e.target.value)}
-                value={contents.mezmurType}
-              >
-                <option>ልመና</option>
-                <option>ንስሓ</option>
-                <option>ምስጋና</option>
-                <option>ኣምልኾ</option>
-                <option>ድ.ማርያም</option>
-              </Form.Control>
+                type="text"
+                id="cover"
+                onChange={(e) => handleChange("cover", e.target.value)}
+                value={contents.cover}
+              />
             </Form.Group>
             {/* <Form.Group className="mt-3"> */}
             <Form.Label>Blog Content</Form.Label>
             <ReactQuill
-              id="officialLyric"
+              id="content"
               className="bg-light"
-              value={contents.officialLyric}
+              value={contents.content}
               onChange={handleChangeQuill}
             />
             {/* </Form.Group> */}
@@ -116,13 +108,7 @@ const AddBlog = () => {
                 value={contents.youtubeLink}
               />
             </Form.Group>
-            <Form.Group id="formGroupDate">
-              <Form.Label>Release Date</Form.Label>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-              />
-            </Form.Group>
+
             <Button type="submit">Submit</Button>
           </Form>
         </Col>
