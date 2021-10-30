@@ -4,11 +4,11 @@
   border-radius: 50%;
   position: absolute;
   top: 0;
-  left: 5%;
+  left: 1.4%;
   object-fit: cover;
 }
 .follow {
   position: absolute;
-  top: 42%;
+  top: 41%;
   left: 38%;
 }
