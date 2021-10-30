@@ -8,9 +8,9 @@ import {
   Popover,
   OverlayTrigger,
 } from "react-bootstrap";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { BsEnvelopeFill, BsCoin } from "react-icons/bs";
+
 import "./topnav.css";
+import "../../asset/logo.jpeg";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -86,6 +86,7 @@ const Topnav = ({ props }) => {
                     height="30"
                     className="d-inline-block align-top rounded-circle profile-img"
                     alt="React Bootstrap logo"
+                    style={{ objectFit: "cover" }}
                   />
                 </div>
               </Link>
@@ -112,7 +113,17 @@ const Topnav = ({ props }) => {
           </DropdownButton>
         </Nav>
         <Navbar.Brand href="#home" className="mr-auto">
-          ዘመሩ
+          <img
+            src={`${process.env.PUBLIC_URL}/logo.jpeg`}
+            alt="logo"
+            style={{
+              width: "150px",
+              height: "80px",
+              backgroundColor: "none",
+              filter: "drop-shadow(5px 5px 5px #222)",
+              WebkitFilter: "drop-shadow(5px 5px 5px #222)",
+            }}
+          />
         </Navbar.Brand>
 
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
