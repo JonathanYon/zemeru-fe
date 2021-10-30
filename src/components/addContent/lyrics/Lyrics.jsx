@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Jumbotron, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
-import { FaThumbsUp } from "react-icons/fa";
 import ContentEditable from "react-contenteditable";
+import { jwtId } from "../../../utils";
+import Comments from "../../home/comments/Comments";
 
 const Lyrics = (props) => {
   const [lyric, setLyric] = useState(null);
@@ -11,31 +12,26 @@ const Lyrics = (props) => {
 
   const { id } = props.match.params;
 
-  const jwtId = (token) => {
-    if (!token) {
-      return;
-    }
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace("-", "+").replace("_", "/");
-    return JSON.parse(window.atob(base64));
-  };
-
   useEffect(() => {
     const getLyric = async () => {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL}/lyrics/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-          },
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_URL}/lyrics/${id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const res = await response.json();
+          console.log("Lyric,jsx", res);
+          setLyric(res);
+          setHtml(res.officialLyric);
         }
-      );
-      if (response.ok) {
-        const res = await response.json();
-        console.log("Lyric,jsx", res);
-        setLyric(res);
-        setHtml(res.officialLyric);
+      } catch (error) {
+        console.log(error);
       }
     };
     getLyric();
@@ -120,84 +116,7 @@ const Lyrics = (props) => {
             />
           </Col>
           <Col xs={6}>
-            <div className="row d-flex justify-content-center">
-              <div
-              //   className="col-md-8 col-lg-6"
-              >
-                <div
-                  className="card shadow-0 border"
-                  style={{ backgroundColor: "#f0f2f5" }}
-                >
-                  <div className="card-body p-4">
-                    <div className="form-outline mb-4">
-                      <input
-                        type="text"
-                        id="addANote"
-                        className="form-control"
-                        placeholder="Type comment..."
-                      />
-                      <label className="form-label" for="addANote">
-                        + Add a note
-                      </label>
-                    </div>
-
-                    <div className="card mb-4">
-                      <div className="card-body">
-                        <p>Type your note, and hit enter to add it</p>
-
-                        <div className="d-flex justify-content-between">
-                          <div className="d-flex flex-row align-items-center">
-                            <img
-                              src="https://mdbootstrap.com/img/Photos/Avatars/img%20(4).jpg"
-                              alt="avatar"
-                              className="rounded-circle mr-1"
-                              style={{ width: "25px", height: "25px" }}
-                            />
-                            <p className="small mb-0 ms-2">Martha</p>
-                          </div>
-                          <div className="d-flex flex-row align-items-center">
-                            <p className="small text-muted mb-0">Upvote?</p>
-                            <FaThumbsUp
-                              className="mx-2"
-                              style={{ marginTop: "-0.16rem" }}
-                            />
-
-                            <p className="small text-muted mb-0">3</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="card mb-4">
-                      <div className="card-body">
-                        <p>Type your note, and hit enter to add it</p>
-
-                        <div className="d-flex justify-content-between">
-                          <div className="d-flex flex-row align-items-center">
-                            <img
-                              src="https://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg"
-                              alt="avatar"
-                              className="rounded-circle mr-1"
-                              style={{ width: "25px", height: "25px" }}
-                            />
-                            <p className="small mb-0 ms-2">Johny</p>
-                          </div>
-                          <div className="d-flex flex-row align-items-center">
-                            <p className="small text-muted mb-0">Upvote?</p>
-                            <FaThumbsUp
-                              className="mx-2"
-                              style={{ marginTop: "-0.16rem" }}
-                            />
-
-                            <p className="small text-muted mb-0">4</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Comments />
           </Col>
         </Row>
       </Container>
