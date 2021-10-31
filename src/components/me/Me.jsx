@@ -1,10 +1,69 @@
-import { Jumbotron, Container, Row, Col, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Jumbotron, Container, Row, Col, Button, Modal } from "react-bootstrap";
 import LeftCard from "./card/LeftCard";
 import "./me.css";
 
 const Me = ({ me }) => {
+  const [show, setShow] = useState(false);
+  const [avatar, setAvatar] = useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const imageHandler = (e) => {
+    let postImage = new FormData();
+    postImage.append("avatar", e.target.files[0]);
+    setAvatar(postImage);
+  };
+
+  const addAvatar = async (e) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/users/me/avatar`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          body: avatar,
+        }
+      );
+      if (response.ok) {
+        alert("Sent");
+      } else {
+        alert("something wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <form encType="multipart/form-data" action="">
+              <input
+                id="id-for-upload-file"
+                type="file"
+                onChange={imageHandler}
+              />
+            </form>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button> */}
+          <Button variant="primary" onClick={addAvatar}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Jumbotron
         fluid
         style={{
@@ -39,7 +98,12 @@ const Me = ({ me }) => {
         <Row>
           <Col xs={4}>
             <h5>@{me?.username}</h5>
-            <Button className="bg-light text-black-50 mb-2">Edit</Button>
+            <Button
+              className="bg-light text-black-50 mb-2"
+              onClick={handleShow}
+            >
+              Edit
+            </Button>
             <LeftCard />
             <LeftCard />
           </Col>
