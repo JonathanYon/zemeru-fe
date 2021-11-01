@@ -63,6 +63,34 @@ const LyricsAdminPage = () => {
           )}
           {/* edited.updatedLyric */}
           <h3 className="my-4">hello</h3>
+          {lyrics.map((lyr) => (
+            <div className="d-flex">
+              <ContentEditable
+                className="mr-4 bg-success mb-3"
+                html={lyr.officialLyric}
+                disabled={true}
+                // onChange={(e) => setOfficialL(e.target.value)}
+              />
+
+              {lyr.editedLyrics.map((edited) => (
+                <div>
+                  <ContentEditable
+                    className="mr-4 bg-light"
+                    html={
+                      diff.diffPatch(lyr.officialLyric, edited.updatedLyric)
+                        .after
+                    }
+                    disabled={true}
+                    // onChange={(e) => setOfficialL(e.target.value)}
+                  />
+                  <div className="mb-2">
+                    <Button className="mr-2">Edit</Button>
+                    <Button>Delete</Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
         </Col>
       </Row>
     </Container>
