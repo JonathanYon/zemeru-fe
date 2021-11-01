@@ -9,7 +9,7 @@ import { withRouter } from "react-router";
 const OneComment = ({ match, comment }) => {
   const [update, setUpdate] = useState(false);
   const [editComment, setEditComment] = useState(comment.comment);
-  const me = useSelector((state) => state.user.me._id);
+  const me = useSelector((state) => state.user.me?._id);
 
   const deleteComment = async (commentID) => {
     try {
@@ -66,7 +66,7 @@ const OneComment = ({ match, comment }) => {
     }
   };
 
-  console.log(comment);
+  console.log("1comment", comment.userId);
   return (
     <>
       {update ? (

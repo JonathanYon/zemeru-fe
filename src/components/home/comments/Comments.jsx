@@ -42,7 +42,7 @@ const Comments = (props) => {
     }
   };
   useEffect(() => {
-    // const { id } = props.match.params;
+    const { id } = props.match.params;
     dispatch(getComments(id));
   }, []);
 

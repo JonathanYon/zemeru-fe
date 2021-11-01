@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import BlogContent from "./components/home/blogRow/single-blog/BlogContent";
 import Lyrics from "./components/addContent/lyrics/Lyrics";
+import LyricsAdminPage from "./components/addContent/lyrics/LyricsAdminPage";
 function App() {
   const [logged, setLogged] = useState(false);
 
@@ -33,6 +34,7 @@ function App() {
         />
 
         <Route exact path="/lyric/:id" component={Lyrics} />
+        <Route exact path="/adminPage" component={LyricsAdminPage} />
         {/* <BlogRow /> */}
         {/* <BlogRow />*/}
 

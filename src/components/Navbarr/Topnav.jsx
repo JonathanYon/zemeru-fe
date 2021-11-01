@@ -103,18 +103,10 @@ const Topnav = ({ props }) => {
           {/* <Nav.Link href="#pricing" className="pr-3">
             Post
           </Nav.Link> */}
-          <DropdownButton id="dropdown-basic-button" title="Post">
-            <Link to="/addLyrics">
-              <Dropdown.Item href="#/action-1">Add song</Dropdown.Item>
-            </Link>
-            <Link to="/addBlog">
-              <Dropdown.Item href="#/action-2">Add Blog</Dropdown.Item>
-            </Link>
-          </DropdownButton>
         </Nav>
         <Navbar.Brand href="#home" className="mr-auto">
           <img
-            src={`${process.env.PUBLIC_URL}/logo.jpeg`}
+            src={`${process.env.PUBLIC_URL}/logo.svg`}
             alt="logo"
             style={{
               width: "150px",
@@ -137,6 +129,14 @@ const Topnav = ({ props }) => {
             />
           </Form>
         </OverlayTrigger>
+        <DropdownButton id="dropdown-basic-button" title="Post">
+          <Link to="/addLyrics">
+            <Dropdown.Item href="#/action-1">Add song</Dropdown.Item>
+          </Link>
+          <Link to="/addBlog">
+            <Dropdown.Item href="#/action-2">Add Blog</Dropdown.Item>
+          </Link>
+        </DropdownButton>
         {!me && (
           <>
             <Link to="/login">

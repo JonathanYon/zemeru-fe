@@ -120,6 +120,7 @@ export const myLyrics = () => {
 export const getComments = (id) => {
   return async (dispatch) => {
     try {
+      console.log("try action");
       const response = await fetch(
         `${process.env.REACT_APP_URL}/lyrics/post/${id}/comments`,
         {
@@ -130,6 +131,7 @@ export const getComments = (id) => {
         }
       );
       if (response.ok) {
+        console.log("response.ok action");
         const res = await response.json();
         dispatch({
           type: LOADING_COMMENTS,
@@ -147,6 +149,7 @@ export const getComments = (id) => {
         });
       }
     } catch (error) {
+      console.log("catcherrr comment action");
       console.log(error);
       dispatch({
         type: ERROR_COMMENTS,
