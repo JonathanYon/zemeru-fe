@@ -4,11 +4,13 @@ import { withRouter } from "react-router";
 import ContentEditable from "react-contenteditable";
 import { jwtId } from "../../../utils";
 import Comments from "../../home/comments/Comments";
+import YoutubeVideo from "./YoutubeVideo";
 
 const Lyrics = (props) => {
   const [lyric, setLyric] = useState(null);
   const [html, setHtml] = useState(null);
   const [edit, setEdit] = useState(true);
+  const [yt, setYt] = useState("");
 
   const { id } = props.match.params;
 
@@ -26,9 +28,10 @@ const Lyrics = (props) => {
         );
         if (response.ok) {
           const res = await response.json();
-          console.log("Lyric,jsx", res);
+          // console.log("Lyric,jsx", res);
           setLyric(res);
           setHtml(res.officialLyric);
+          setYt(res.youtubeLink);
         }
       } catch (error) {
         console.log(error);
@@ -58,29 +61,34 @@ const Lyrics = (props) => {
       setEdit(!edit);
     }
   };
+  console.log("LRC", lyric);
+  // console.log("YT", yt);
   return (
     <>
       <Jumbotron
         fluid
         style={{
-          backgroundImage:
-            "url('https://lh3.googleusercontent.com/proxy/7jaQrdQKDIa71rC-jnVLbw8o8BqHf1YJwoWvB96fbB91Z2aMDn6bQOADuZeJut2zZbBqolkTR_BmlawOIsx7AWh1wpApPP3QJikUtObsz2Ro_DHgGTRpj1zoNe030bjY8CUty32ey2NaRKTMNYJnl9RmC93s0Y5rh3c6')",
+          backgroundImage: `url(${process.env.PUBLIC_URL}/logo.svg)`,
           backgroundRepeat: "repeat-x",
           backgroundSize: "100% 100%",
+          objectFit: "cover",
         }}
       >
         <Container className="text-black position-relative">
-          <h1>Fluid jumbotron</h1>
-          <p>
-            This is a modified jumbotron that occupies the entire horizontal
-            space of its parent.
-          </p>
+          <ul>
+            <li>መዝሙር: {lyric?.title}</li>
+            <li>ዘማሪ/ት: {lyric?.artist}</li>
+            <li>ኣስፈርቲ ግጥሚ: {lyric?.userId.username}</li>
+          </ul>
           <div className="my-photo ">
             <img
               //   src="https://www.gannett-cdn.com/-mm-/fd5c5b5393c72a785789f0cd5bd20acedd2d2804/c=0-350-2659-1850/local/-/media/Phoenix/BillGoodykoontz/2014/04/24//1398388295000-Homer-Simpson.jpg"
               src={lyric?.coverImage}
               alt=""
               className="photo"
+              style={{
+                objectFit: "cover",
+              }}
             />
           </div>
         </Container>
@@ -117,6 +125,7 @@ const Lyrics = (props) => {
           </Col>
           <Col xs={6}>
             <Comments />
+            <YoutubeVideo ytVideo={yt} />
           </Col>
         </Row>
       </Container>
