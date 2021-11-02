@@ -10,10 +10,14 @@ const Comments = (props) => {
   const [comment, setComment] = useState("");
   const comments = useSelector((state) => state.lyricsComments.comments);
   const dispatch = useDispatch();
-  const { id } = props.match.params;
+  useEffect(() => {
+    const { id } = props.match.params;
+    dispatch(getComments(id));
+  }, []);
 
   const submitComment = async (e) => {
     e.preventDefault();
+    const { id } = props.match.params;
     const payload = {
       comment,
     };
@@ -41,10 +45,6 @@ const Comments = (props) => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    const { id } = props.match.params;
-    dispatch(getComments(id));
-  }, []);
 
   return (
     // <div className="row d-flex justify-content-center">

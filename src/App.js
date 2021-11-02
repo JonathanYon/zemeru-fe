@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import BlogContent from "./components/home/blogRow/single-blog/BlogContent";
 import Lyrics from "./components/addContent/lyrics/Lyrics";
 import LyricsAdminPage from "./components/addContent/lyrics/LyricsAdminPage";
+import EditedLists from "./components/addContent/lyrics/EditedLists";
 function App() {
   const [logged, setLogged] = useState(false);
 
@@ -41,6 +42,7 @@ function App() {
         {/* <Me /> */}
         <Route exact path="/addLyrics" component={AddLyrics} />
         <Route exact path="/addBlog" component={AddBlog} />
+        <Route exact path="/edited/:lId/lyrics/:eId" component={EditedLists} />
         {/* <AddBlog /> */}
         {/* <Route component={NotFound} /> */}
       </Router>

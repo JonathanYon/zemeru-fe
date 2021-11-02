@@ -50,7 +50,7 @@ const Topnav = ({ props }) => {
       try {
         const response = await fetch(
           `${process.env.REACT_APP_URL}/lyrics?officialLyric=${
-            query.indexOf(" ") ? decodeURI(query) : query
+            query?.indexOf(" ") ? decodeURI(query) : query
           }`,
           {
             headers: {

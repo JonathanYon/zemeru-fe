@@ -12,8 +12,15 @@ const UserChart = () => {
     return [...new Map(data.map((x) => [key(x), x])).values()];
   };
   const editors = uniqueUser(userID, (it) => it._id);
-  console.log("repeate", userID);
-  console.log("unique", editors);
+  const userContrib = contributer.map((element) => {
+    const holder = [];
+    holder.push({ title: element.title, username: element.userId.username });
+    // return holder
+    console.log(holder);
+  });
+  // console.log("repeate", contributer);
+
+  // console.log("unique", editors);
   const dispatch = useDispatch();
 
   useEffect(() => {
