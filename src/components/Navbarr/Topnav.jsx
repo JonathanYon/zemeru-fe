@@ -61,7 +61,7 @@ const Topnav = ({ props }) => {
         );
         if (response.ok) {
           const res = await response.json();
-          // console.log(res);
+
           setResult(res);
         }
       } catch (error) {
@@ -70,11 +70,10 @@ const Topnav = ({ props }) => {
     };
     getAllLyrics();
   }, [query]);
-  // console.log("query", query);
-  // console.log("result", result);
+
   return (
     <>
-      <Navbar className="mx-5">
+      {/* <Navbar className="mx-5">
         <Nav className="mr-auto">
           {me && (
             <>
@@ -100,9 +99,7 @@ const Topnav = ({ props }) => {
           <Nav.Link href="#pricing" className="pr-3">
             Shop
           </Nav.Link>
-          {/* <Nav.Link href="#pricing" className="pr-3">
-            Post
-          </Nav.Link> */}
+          
         </Nav>
         <Navbar.Brand href="#home" className="mr-auto">
           <img
@@ -122,8 +119,8 @@ const Topnav = ({ props }) => {
           <Form inline>
             <FormControl
               type="text"
-              placeholder="Search lyrics or blog"
               className="mr-sm-2"
+              placeholder="Search lyrics or blog"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -147,8 +144,167 @@ const Topnav = ({ props }) => {
             </Link>
           </>
         )}
-      </Navbar>
-      <hr />
+      </Navbar> */}
+
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid justify-content-between">
+          <div className="d-flex">
+            <Link
+              to="/"
+              className="navbar-brand me-2 mb-1 d-flex align-items-center"
+            >
+              {/* <a
+                className="navbar-brand me-2 mb-1 d-flex align-items-center"
+                href="#"
+              > */}
+              <img
+                // src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
+                src={`${process.env.PUBLIC_URL}/logo.svg`}
+                height="35"
+                alt="logo"
+                loading="lazy"
+                style={{ marginTop: "2px" }}
+              />
+              {/* </a> */}
+            </Link>
+            <OverlayTrigger
+              trigger="click"
+              placement="bottom"
+              overlay={popover}
+            >
+              <form className="input-group w-auto my-auto d-none d-sm-flex">
+                <input
+                  // autocomplete="off"
+                  type="text"
+                  className="form-control rounded"
+                  placeholder="Search lyrics or blog"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  style={{ minWidth: "125px" }}
+                />
+              </form>
+            </OverlayTrigger>
+          </div>
+
+          <ul className="navbar-nav flex-row">
+            {me && (
+              <li className="nav-item me-3 me-lg-1">
+                <Link
+                  to="/me"
+                  className="nav-link d-sm-flex align-items-sm-center"
+                >
+                  {/* <a className="nav-link d-sm-flex align-items-sm-center" href="#"> */}
+                  <img
+                    src={me ? me.avatar : "https://picsum.photos/200"}
+                    className="rounded-circle"
+                    height="22"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <strong className="d-none d-sm-block ms-1">John</strong>
+                  {/* </a> */}
+                </Link>
+              </li>
+            )}
+            <li className="nav-item me-3 me-lg-1">
+              {!me && (
+                <Link to="/login">
+                  <button type="button" className="btn btn-link px-3 login">
+                    Login
+                  </button>
+                </Link>
+              )}
+            </li>
+            <li className="nav-item me-3 me-lg-1">
+              {!me && (
+                <Link to="/register">
+                  <button type="button" className="btn btn-secondary">
+                    Sign up
+                  </button>
+                </Link>
+              )}
+            </li>
+            <DropdownButton
+              id="dropdown-basic-button"
+              title="Post"
+              variant="light"
+              className="border-bottom"
+            >
+              <Link to="/addLyrics">
+                <Dropdown.Item href="#/action-1">Add song</Dropdown.Item>
+              </Link>
+              <Link to="/addBlog">
+                <Dropdown.Item href="#/action-2">Add Blog</Dropdown.Item>
+              </Link>
+            </DropdownButton>
+
+            {/* <li className="nav-item dropdown me-3 me-lg-1">
+              <a
+                className="nav-link dropdown-toggle hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span className="badge rounded-pill badge-notification bg-danger">
+                  12
+                </span>
+              </a>
+              <ul
+                className="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a className="dropdown-item" href="#">
+                    Some news
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="#">
+                    Another news
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="#">
+                    Something else here
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li className="nav-item dropdown me-3 me-lg-1">
+              <a
+                className="nav-link dropdown-toggle hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              ></a>
+              <ul
+                className="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a className="dropdown-item" href="#">
+                    Some news
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="#">
+                    Another news
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="#">
+                    Something else here
+                  </a>
+                </li>
+              </ul>
+            </li> */}
+          </ul>
+        </div>
+      </nav>
     </>
   );
 };
