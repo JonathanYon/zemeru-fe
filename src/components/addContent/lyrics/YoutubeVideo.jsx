@@ -8,8 +8,8 @@ const YoutubeVideo = ({ ytVideo }) => {
   return (
     <Col className="mt-5 ml-n3">
       <iframe
-        width="540"
-        height="315"
+        width="100%"
+        height="100%"
         src={`https://www.youtube.com/embed/${YTcode}?start=1`}
         title="YouTube video player"
         frameborder="0"

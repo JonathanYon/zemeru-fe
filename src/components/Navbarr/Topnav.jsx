@@ -201,7 +201,9 @@ const Topnav = ({ props }) => {
                     alt=""
                     loading="lazy"
                   />
-                  <strong className="d-none d-sm-block ms-1">John</strong>
+                  <strong className="d-none d-sm-block ms-1">
+                    {me.username}
+                  </strong>
                   {/* </a> */}
                 </Link>
               </li>
