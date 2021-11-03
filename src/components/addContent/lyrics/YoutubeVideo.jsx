@@ -1,4 +1,5 @@
 import { Col } from "react-bootstrap";
+import "./add-lyrics.css";
 
 const YoutubeVideo = ({ ytVideo }) => {
   //   console.log(ytVideo);
@@ -6,8 +7,9 @@ const YoutubeVideo = ({ ytVideo }) => {
 
   console.log(YTcode);
   return (
-    <Col className="mt-5 ml-n3">
+    <Col className="mt-5  yt-video position-relative">
       <iframe
+        className="yt-iframe"
         width="100%"
         height="100%"
         src={`https://www.youtube.com/embed/${YTcode}?start=1`}

@@ -3,7 +3,7 @@ import { Container, Row, Col, Jumbotron, Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 import ContentEditable from "react-contenteditable";
 import { jwtId } from "../../../utils";
-import Comments from "../../home/comments/Comments";
+import Comments from "./comments/Comments";
 import YoutubeVideo from "./YoutubeVideo";
 import "./add-lyrics.css";
 
