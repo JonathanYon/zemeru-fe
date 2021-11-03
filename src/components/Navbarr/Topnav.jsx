@@ -200,6 +200,7 @@ const Topnav = ({ props }) => {
                     height="22"
                     alt=""
                     loading="lazy"
+                    style={{ objectFit: "cover" }}
                   />
                   <strong className="d-none d-sm-block ms-1">
                     {me.username}

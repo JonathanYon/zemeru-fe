@@ -67,7 +67,7 @@ const Me = ({ me }) => {
       <Jumbotron
         fluid
         style={{
-          backgroundImage: `url(${me.avatar})`,
+          backgroundImage: `url(${me?.avatar})`,
           backgroundRepeat: "repeat-x",
           backgroundSize: "100% 100%",
         }}
