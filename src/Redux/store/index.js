@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { meReducer } from "../reducer";
 import { blogsReducer } from "../reducer/blogs";
 import { commentsReducer } from "../reducer/comments";
+import likeReducer from "../reducer/like";
 import { lyricsReducer } from "../reducer/lyrics";
 
 export const initialState = {
@@ -21,6 +22,10 @@ export const initialState = {
     error: false,
     loading: true,
   },
+  liked: {
+    lyrics: [],
+    blog: [],
+  },
   lyricsComments: {
     comments: [],
     error: false,
@@ -38,6 +43,7 @@ const rootReducer = combineReducers({
   blogs: blogsReducer,
   allLyrics: lyricsReducer,
   lyricsComments: commentsReducer,
+  liked: likeReducer,
 });
 
 const configStore = createStore(
