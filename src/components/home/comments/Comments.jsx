@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 const Comments = (props) => {
   const [comment, setComment] = useState("");
+  const [commentClick, setCommentClick] = useState(false);
   const comments = useSelector((state) => state.lyricsComments.comments);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -62,11 +63,28 @@ const Comments = (props) => {
               className="form-control"
               placeholder="Type comment..."
               value={comment}
+              onClick={() => setCommentClick(true)}
               onChange={(e) => setComment(e.target.value)}
             />
-            <Button className="form-label mt-2" for="addANote" type="submit">
-              comment
-            </Button>
+            {commentClick && (
+              <Button
+                className="form-label mt-2 mr-2 text-dark bg-light font-weight-bold"
+                for="addANote"
+                type="submit"
+              >
+                comment
+              </Button>
+            )}
+            {commentClick && (
+              <Button
+                className="form-label mt-2 text-black-50 bg-light font-weight-bold"
+                for="addANote"
+                type="submit"
+                onClick={() => setCommentClick(false)}
+              >
+                cancel
+              </Button>
+            )}
           </form>
         </div>
         {comments.map((aComment) => (
