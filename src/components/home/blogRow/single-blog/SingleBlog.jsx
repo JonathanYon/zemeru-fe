@@ -1,29 +1,36 @@
 import "./single-blog.css";
-import { Card, Col } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
+import "./single-blog.css";
 
 const SingleBlog = ({ blog }) => {
+  console.log("blog", blog);
   return (
-    // <Col>
+    <Card
+      // style={{ width: "18rem" }}
+      className="ml-5 mb-4 card-container bg-transparent"
+    >
+      <Card.Img
+        variant="top"
+        src={blog.cover}
+        className="front"
+        style={{ objectFit: "cover" }}
+      />
 
-    <Card style={{ width: "18rem" }} className="ml-5 mb-4">
       <Link to={`/blogs/${blog._id}`}>
-        <Card.Img
-          variant="top"
-          // src="https://dailygazette.com/wp-content/uploads/fly-images/134790/homer-940x940.png"
-          src={blog.cover}
-        />
+        <Card.Body className="back">
+          {/* <Card.Title className="title">{blog.title}</Card.Title> */}
+          <Card.Title>{blog.title}</Card.Title>
+          <small>
+            by <strong>{blog.authors[0].username} </strong>
+            <br />
+            <small>{format(new Date(blog.createdAt), "PP")}</small>
+          </small>
+        </Card.Body>
       </Link>
-      <Card.Body>
-        <Card.Title>{blog.title}</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-      </Card.Body>
     </Card>
-    // </Col>
   );
 };
 export default withRouter(SingleBlog);
