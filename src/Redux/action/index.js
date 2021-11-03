@@ -10,6 +10,8 @@ export const LYRICS = "LYRICS";
 export const LOADING_COMMENTS = "LOADING_COMMENTS";
 export const ERROR_COMMENTS = "ERROR_COMMENTS";
 export const COMMENTS = "COMMENTS";
+export const TOGGLE_BLOG = "TOGGLE_BLOG";
+export const TOGGLE_LYRICS = "TOGGLE_LYRICS";
 
 export const myLogin = () => {
   return async (dispatch) => {
@@ -158,3 +160,57 @@ export const getComments = (id) => {
     }
   };
 };
+
+//comments in lyrics
+// export const getComments = (id) => {
+//   return async (dispatch) => {
+//     try {
+//       console.log("try action");
+//       const response = await fetch(
+//         `${process.env.REACT_APP_URL}/blogs/post/${id}/comments`,
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+//           },
+//         }
+//       );
+//       if (response.ok) {
+//         console.log("response.ok action");
+//         const res = await response.json();
+//         dispatch({
+//           type: LOADING_COMMENTS,
+//           payload: false,
+//         });
+//         dispatch({
+//           type: COMMENTS,
+//           payload: res,
+//         });
+//       } else {
+//         alert("something Wrong");
+//         dispatch({
+//           type: ERROR_COMMENTS,
+//           payload: true,
+//         });
+//       }
+//     } catch (error) {
+//       console.log("catcherrr comment action");
+//       console.log(error);
+//       dispatch({
+//         type: ERROR_COMMENTS,
+//         payload: true,
+//       });
+//     }
+//   };
+// };
+
+// lyrics like
+
+export const toggleLikeLyrics = (data) => ({
+  type: TOGGLE_LYRICS,
+  payload: data,
+});
+export const toggleLikeBlog = (data) => ({
+  type: TOGGLE_BLOG,
+  payload: data,
+});
