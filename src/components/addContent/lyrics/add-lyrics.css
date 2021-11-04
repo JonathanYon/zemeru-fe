@@ -1,5 +1,11 @@
-ins {
+/* ins {
   background-color: red;
+} */
+del {
+  background: red;
+}
+ins {
+  background: green;
 }
 
 .info-container {

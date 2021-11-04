@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 
-const EditedLists = ({ match }) => {
+const EditedLists = ({ match, history }) => {
   const deleteUserEdit = async () => {
     //edited/:lId/lyrics/:eId
     const { lId, eId } = match.params;
@@ -17,6 +17,7 @@ const EditedLists = ({ match }) => {
         }
       );
       if (response.ok) {
+        history.push("/adminPage");
         alert("Deleted");
       } else {
         alert("something wrong");
@@ -41,6 +42,7 @@ const EditedLists = ({ match }) => {
         }
       );
       if (response.ok) {
+        history.push("/adminPage");
         alert("Updated");
       } else {
         alert("something wrong");
