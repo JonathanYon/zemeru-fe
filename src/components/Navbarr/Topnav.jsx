@@ -70,7 +70,7 @@ const Topnav = ({ props }) => {
     };
     getAllLyrics();
   }, [query]);
-
+  console.log("me", me);
   return (
     <>
       {/* <Navbar className="mx-5">
@@ -193,11 +193,11 @@ const Topnav = ({ props }) => {
                   to="/me"
                   className="nav-link d-sm-flex align-items-sm-center"
                 >
-                  {/* <a className="nav-link d-sm-flex align-items-sm-center" href="#"> */}
                   <img
                     src={me ? me.avatar : "https://picsum.photos/200"}
-                    className="rounded-circle"
-                    height="22"
+                    className="rounded-circle mr-2"
+                    height="25"
+                    width="25"
                     alt=""
                     loading="lazy"
                     style={{ objectFit: "cover" }}
@@ -205,10 +205,22 @@ const Topnav = ({ props }) => {
                   <strong className="d-none d-sm-block ms-1">
                     {me.username}
                   </strong>
-                  {/* </a> */}
                 </Link>
               </li>
             )}
+            {me.role === "Editor" && (
+              <li className="nav-item me-3 me-lg-1">
+                <Link
+                  to="/adminPage"
+                  className="nav-link d-sm-flex align-items-sm-center"
+                >
+                  <strong className="d-none d-sm-block ms-1">
+                    Updated Lyrics
+                  </strong>
+                </Link>
+              </li>
+            )}
+
             <li className="nav-item me-3 me-lg-1">
               {!me && (
                 <Link to="/login">
