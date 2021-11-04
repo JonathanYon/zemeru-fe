@@ -1,9 +1,11 @@
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Badge, Col, Container, Row, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const LyricsChart = () => {
   const lyrics = useSelector((state) => state.allLyrics.lyrics);
+  const me = useSelector((state) => state.user.me);
+
   return (
     <Container className="mt-5">
       <Row>
@@ -27,7 +29,15 @@ const LyricsChart = () => {
                     />
                   </td>
                   <Link to={`/lyric/${lyric._id}`}>
-                    <td>{lyric.title}</td>
+                    <td>
+                      {lyric.title}{" "}
+                      {me.role === "Editor" &&
+                        lyric.editedLyrics.length !== 0 && (
+                          <Badge variant="warning">
+                            {lyric.editedLyrics.length}
+                          </Badge>
+                        )}
+                    </td>
                   </Link>
                   <td>{lyric.artist}</td>
                   <td>{lyric.mezmurType}</td>
