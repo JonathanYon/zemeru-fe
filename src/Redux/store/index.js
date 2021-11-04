@@ -6,6 +6,14 @@ import { commentsReducer } from "../reducer/comments";
 import likeReducer from "../reducer/like";
 import { lyricsReducer } from "../reducer/lyrics";
 import { blogCommentsReducer } from "../reducer/blogComments";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["user"], // only navigation will be persisted
+};
 
 export const initialState = {
   user: {
@@ -48,11 +56,14 @@ const rootReducer = combineReducers({
   blogsComments: blogCommentsReducer,
 });
 
-const configStore = createStore(
-  rootReducer,
+const configPersist = persistReducer(persistConfig, rootReducer);
+
+export const configStore = createStore(
+  configPersist,
   initialState,
   process.env.REACT_APP_DEV
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(thunk))
     : compose(applyMiddleware(thunk))
 );
-export default configStore;
+export const persistor = persistStore(configStore);
+export default { configStore, persistor };
