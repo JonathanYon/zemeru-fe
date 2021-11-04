@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap");
-/* font-family: 'Source Code Pro', monospace; */
 
 .card-container,
 .front,
@@ -96,3 +95,6 @@
   text-decoration: none;
 }
 /* ----------------------blog content-------------------- */
+.content-title {
+  font-family: "Source Code Pro", monospace;
+}

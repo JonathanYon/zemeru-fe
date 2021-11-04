@@ -62,7 +62,7 @@ const AddLyrics = () => {
   };
 
   return (
-    <Container>
+    <Container className="mb-5">
       <Row>
         <Col xs={6}>
           <Form onSubmit={handlelyrics}>
@@ -145,12 +145,12 @@ const AddLyrics = () => {
               section headers above different song parts.
             </li>
             <li>
-              Only add a song to Genius if it has been officially released.
+              Only add a song to Zemeru if it has been officially released.
               Fan-made mashups, songs that leak pre-release, and songs that
-              violate our community policy are not allowed on ዘመሩ.
+              violate our community policy are not allowed on Zemeru.
             </li>
             <p>
-              To learn more about adding songs on Genius, check out the full
+              To learn more about adding songs on Zemeru, check out the full
               guide (here) link.
             </p>
           </ol>
