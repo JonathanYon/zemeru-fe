@@ -5,6 +5,7 @@ import { blogsReducer } from "../reducer/blogs";
 import { commentsReducer } from "../reducer/comments";
 import likeReducer from "../reducer/like";
 import { lyricsReducer } from "../reducer/lyrics";
+import { blogCommentsReducer } from "../reducer/blogComments";
 
 export const initialState = {
   user: {
@@ -44,6 +45,7 @@ const rootReducer = combineReducers({
   allLyrics: lyricsReducer,
   lyricsComments: commentsReducer,
   liked: likeReducer,
+  blogsComments: blogCommentsReducer,
 });
 
 const configStore = createStore(

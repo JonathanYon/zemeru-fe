@@ -1,12 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap");
+/* font-family: 'Source Code Pro', monospace; */
+
 .card-container,
 .front,
 .back {
   width: 17rem;
   height: 20rem;
 }
-.card-container {
-  /* margin: 5rem; */
-}
+/* .card-container {
+  margin: 5rem;
+} */
 .front,
 .back {
   box-sizing: border-box;
@@ -92,3 +95,4 @@
 .title {
   text-decoration: none;
 }
+/* ----------------------blog content-------------------- */
