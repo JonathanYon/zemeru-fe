@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { withRouter } from "react-router";
+import BlogComments from "./comments/BlogComments";
 
 const BlogContent = (props) => {
   const [article, setArticle] = useState([]);
@@ -38,6 +39,11 @@ const BlogContent = (props) => {
         <Col>
           <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
           {/* {article.content} */}
+        </Col>
+      </Row>
+      <Row className="mb-5">
+        <Col xs={6}>
+          <BlogComments />
         </Col>
       </Row>
     </Container>
