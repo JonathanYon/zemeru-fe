@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { withRouter } from "react-router";
+import SocialMedia from "../../../addContent/SocialMedia";
 import BlogComments from "./comments/BlogComments";
 
 const BlogContent = (props) => {
@@ -32,21 +33,27 @@ const BlogContent = (props) => {
   //   console.log("blog", article);
 
   return (
-    <Container>
-      <h1>{article.title}</h1>
-      <Image src={article.cover} style={{ width: "50%", height: "50%" }} />
-      <Row className="mt-5 mb-5">
-        <Col>
-          <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
-          {/* {article.content} */}
-        </Col>
-      </Row>
-      <Row className="mb-5">
-        <Col xs={6}>
-          <BlogComments />
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Container>
+        <h1 className="content-title">{article.title}</h1>
+        <Image src={article.cover} style={{ width: "50%", height: "50%" }} />
+        <Row className="mt-5 mb-5">
+          <Col>
+            <div
+              dangerouslySetInnerHTML={{ __html: article.content }}
+              className="text-left"
+            ></div>
+            {/* {article.content} */}
+          </Col>
+        </Row>
+        <Row className="mb-5">
+          <Col xs={6}>
+            <BlogComments />
+          </Col>
+        </Row>
+      </Container>
+      <SocialMedia pageURL={window.location.href} content="Blog" />
+    </>
   );
 };
 export default withRouter(BlogContent);

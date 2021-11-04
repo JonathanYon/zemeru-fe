@@ -248,9 +248,11 @@ const Topnav = ({ props }) => {
               <Link to="/addLyrics">
                 <Dropdown.Item href="#/action-1">Add song</Dropdown.Item>
               </Link>
-              <Link to="/addBlog">
-                <Dropdown.Item href="#/action-2">Add Blog</Dropdown.Item>
-              </Link>
+              {me.role === "Editor" && (
+                <Link to="/addBlog">
+                  <Dropdown.Item href="#/action-2">Add Blog</Dropdown.Item>
+                </Link>
+              )}
             </DropdownButton>
 
             {/* <li className="nav-item dropdown me-3 me-lg-1">

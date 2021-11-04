@@ -6,6 +6,8 @@ import { jwtId } from "../../../utils";
 import Comments from "./comments/Comments";
 import YoutubeVideo from "./YoutubeVideo";
 import "./add-lyrics.css";
+import { Link } from "react-router-dom";
+import SocialMedia from "../SocialMedia";
 
 const Lyrics = (props) => {
   const [lyric, setLyric] = useState(null);
@@ -63,7 +65,7 @@ const Lyrics = (props) => {
     }
   };
   console.log("LRC", lyric);
-  // console.log("YT", yt);
+  // console.log("href", window.location.href);
   return (
     <>
       {/* style={{
@@ -202,6 +204,7 @@ const Lyrics = (props) => {
           </Col>
         </Row>
       </Container>
+      <SocialMedia pageURL={window.location.href} content="Lyrics" />
     </>
   );
 };

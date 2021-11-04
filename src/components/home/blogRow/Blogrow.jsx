@@ -19,6 +19,12 @@ const BlogRow = () => {
 
   return (
     <Container className="mt-5">
+      <img
+        src={`${process.env.PUBLIC_URL}/daba.gif`}
+        alt="spinner"
+        style={{ width: "50px", height: "50px" }}
+        className="rounded-circle"
+      />
       {/* <Row>
         <FirstBlog />
       </Row> */}

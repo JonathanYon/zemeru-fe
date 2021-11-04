@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { Jumbotron, Container, Row, Col, Button, Modal } from "react-bootstrap";
+import {
+  Jumbotron,
+  Container,
+  Row,
+  Col,
+  Button,
+  Modal,
+  ListGroup,
+} from "react-bootstrap";
 import LeftCard from "./card/LeftCard";
 import "./me.css";
 
 const Me = ({ me }) => {
   const [show, setShow] = useState(false);
   const [avatar, setAvatar] = useState("");
+  const [errors, setErrors] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -29,9 +39,17 @@ const Me = ({ me }) => {
         }
       );
       if (response.ok) {
-        alert("Sent");
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+        // alert("Sent");
       } else {
-        alert("something wrong");
+        // alert("something wrong");
+        setErrors(true);
+        setTimeout(() => {
+          setErrors(false);
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
@@ -43,6 +61,20 @@ const Me = ({ me }) => {
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
+          {loading && (
+            <ListGroup>
+              <ListGroup.Item variant="success">
+                you have updated your profile Successfully
+              </ListGroup.Item>
+            </ListGroup>
+          )}
+          {errors && (
+            <ListGroup>
+              <ListGroup.Item variant="danger">
+                Something has gone wrong try again later
+              </ListGroup.Item>
+            </ListGroup>
+          )}
         </Modal.Header>
         <Modal.Body>
           <div>
@@ -73,7 +105,6 @@ const Me = ({ me }) => {
         }}
       >
         <Container className="text-black position-relative">
-          <h1>Fluid jumbotron</h1>
           {/* <p>
             This is a modified jumbotron that occupies the entire horizontal
             space of its parent.
