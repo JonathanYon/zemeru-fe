@@ -1,16 +1,38 @@
-import { Badge, Col, Container, Row, Table } from "react-bootstrap";
+import {
+  Badge,
+  Col,
+  Container,
+  Row,
+  Table,
+  Spinner,
+  ListGroup,
+} from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const LyricsChart = () => {
   const lyrics = useSelector((state) => state.allLyrics.lyrics);
   const me = useSelector((state) => state.user.me);
+  const loading = useSelector((state) => state.blogs.loading);
+  const errors = useSelector((state) => state.blogs.error);
 
   return (
     <Container className="mt-5">
       <Row>
         <Col>
           <h3>Top Searched Lyrics</h3>
+          {loading && (
+            <div className=" h-100 d-flex justify-content-center align-items-center">
+              <Spinner animation="grow" className="mt-3" />
+            </div>
+          )}
+          {errors && (
+            <ListGroup className="mt-1 mx-5">
+              <ListGroup.Item variant="danger">
+                <strong>Something has gone wrong please come back again</strong>
+              </ListGroup.Item>
+            </ListGroup>
+          )}
           <Table striped bordered hover>
             <tbody>
               {lyrics.map((lyric, i) => (
@@ -31,7 +53,7 @@ const LyricsChart = () => {
                   <Link to={`/lyric/${lyric._id}`}>
                     <td>
                       {lyric.title}{" "}
-                      {me.role === "Editor" &&
+                      {me?.role === "Editor" &&
                         lyric.editedLyrics.length !== 0 && (
                           <Badge variant="warning">
                             {lyric.editedLyrics.length}
