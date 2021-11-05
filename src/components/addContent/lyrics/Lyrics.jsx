@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Jumbotron, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Spinner,
+  Button,
+  ListGroup,
+  Modal,
+} from "react-bootstrap";
 import { withRouter } from "react-router";
 import ContentEditable from "react-contenteditable";
 import { jwtId } from "../../../utils";
@@ -14,12 +22,19 @@ const Lyrics = (props) => {
   const [html, setHtml] = useState(null);
   const [edit, setEdit] = useState(true);
   const [yt, setYt] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(false);
+  const [editLoad, setEditLoad] = useState(false);
+
+  const [show, setShow] = useState(false);
 
   const { id } = props.match.params;
+  const handleClose = () => setShow(false);
 
   useEffect(() => {
     const getLyric = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `${process.env.REACT_APP_URL}/lyrics/${id}`,
           {
@@ -31,12 +46,17 @@ const Lyrics = (props) => {
         );
         if (response.ok) {
           const res = await response.json();
-          // console.log("Lyric,jsx", res);
+          setLoading(false);
           setLyric(res);
           setHtml(res.officialLyric);
           setYt(res.youtubeLink);
+        } else {
+          setLoading(false);
+          setErrors(true);
         }
       } catch (error) {
+        setLoading(false);
+        setErrors(true);
         console.log(error);
       }
     };
@@ -44,62 +64,44 @@ const Lyrics = (props) => {
   }, [id, edit]);
 
   const editLyrics = async () => {
-    const payload = {
-      updatedLyric: html,
-      userId: jwtId(window.localStorage.getItem("Token"))._id,
-    };
-    const respo = await fetch(
-      `${process.env.REACT_APP_URL}/lyrics/updateLyrics/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-        },
-        body: JSON.stringify(payload),
+    try {
+      setEditLoad(true);
+      const payload = {
+        updatedLyric: html,
+        userId: jwtId(window.localStorage.getItem("Token"))._id,
+      };
+      const respo = await fetch(
+        `${process.env.REACT_APP_URL}/lyrics/updateLyrics/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+      if (respo.ok) {
+        setShow(true);
+        setEditLoad(false);
+
+        setEdit(!edit);
+      } else {
+        setEditLoad(false);
+
+        setShow(false);
       }
-    );
-    if (respo.ok) {
-      alert("Thank you");
-      setEdit(!edit);
+    } catch (error) {
+      setEditLoad(false);
+
+      setShow(false);
+      console.log(error);
     }
   };
   console.log("LRC", lyric);
   // console.log("href", window.location.href);
   return (
     <>
-      {/* style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL}/logo.svg)`,
-          backgroundRepeat: "repeat-x",
-          backgroundSize: "100% 100%",
-          objectFit: "cover",
-        }} */}
-
-      {/* <Jumbotron fluid>
-          <Container className="text-black position-relative">
-            <ul>
-              <li>መዝሙር: {lyric?.title}</li>
-              <li>ዘማሪ/ት: {lyric?.artist}</li>
-              <li>ኣስፈርቲ ግጥሚ: {lyric?.userId.username}</li>
-            </ul>
-            <div className="my-photo ">
-              <img
-                src={lyric?.coverImage}
-                alt=""
-                className="photo"
-                style={{
-                  objectFit: "cover",
-                }}
-              />
-            </div>
-          </Container>
-          <div className="d-flex follow text-black">
-            <small className="pr-4">Featured</small>
-            <small className="pr-4">Followers</small>
-            <small className="pr-4">Following</small>
-          </div>
-        </Jumbotron> */}
-
       <Container
         fluid
         className=" big-info-container"
@@ -163,18 +165,39 @@ const Lyrics = (props) => {
       </Container>
 
       <Container className="my-5">
+        {show && (
+          <Modal show={show} onHide={handleClose} animation={false}>
+            <Modal.Header closeButton>
+              <Modal.Title className="text-success">
+                <strong>
+                  Thanks! we have received your correction proposal
+                </strong>
+              </Modal.Title>
+            </Modal.Header>
+          </Modal>
+        )}
         <Row className="d-sm-flex">
           <Col xs={6}>
+            {errors && (
+              <ListGroup className="mt-1 mx-5">
+                <ListGroup.Item variant="danger">
+                  <strong>
+                    Something has gone wrong please come back again
+                  </strong>
+                </ListGroup.Item>
+              </ListGroup>
+            )}
             {edit ? (
               <Button
                 variant="light"
-                className="border-dark font-weight-bold"
+                className="border-dark font-weight-bold mt-1"
                 onClick={() => setEdit(!edit)}
               >
                 Edit Lyrics
               </Button>
             ) : (
               <div>
+                {editLoad && <Spinner animation="grow" className="mt-1" />}
                 <Button
                   variant="light"
                   className="mr-2 text-success border-success font-weight-bold"
@@ -191,6 +214,12 @@ const Lyrics = (props) => {
                 </Button>
               </div>
             )}
+            {loading && (
+              <div className=" h-100 d-flex justify-content-center align-items-center">
+                <Spinner animation="grow" className="mt-3" />
+              </div>
+            )}
+
             <h3 className="my-4">{lyric?.title}</h3>
             <ContentEditable
               html={html}
