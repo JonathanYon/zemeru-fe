@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import BlogOneComment from "./BlogOneComment";
 import { withRouter } from "react-router";
-import { Button } from "react-bootstrap";
+import { Button, Spinner, ListGroup } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getBlogComments } from "../../../../../Redux/action";
@@ -9,6 +9,9 @@ import { getBlogComments } from "../../../../../Redux/action";
 const BlogComments = (props) => {
   const [comment, setComment] = useState("");
   const [commentClick, setCommentClick] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(false);
+
   const comments = useSelector((state) => state.blogsComments.comments);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -23,6 +26,7 @@ const BlogComments = (props) => {
       comment,
     };
     try {
+      setLoading(true);
       const response = await fetch(
         `${process.env.REACT_APP_URL}/blogs/post/${id}`,
         {
@@ -35,14 +39,19 @@ const BlogComments = (props) => {
         }
       );
       if (response.ok) {
+        setLoading(false);
         // alert("commented");
         const resp = await response.json();
         comments.unshift(resp);
         setComment("");
       } else {
+        setLoading(false);
+        setErrors(true);
         alert("something Wrong");
       }
     } catch (error) {
+      setLoading(false);
+      setErrors(true);
       console.log(error);
     }
   };
@@ -54,6 +63,14 @@ const BlogComments = (props) => {
       className="card shadow-0 border"
       style={{ backgroundColor: "#f0f2f5" }}
     >
+      {loading && <Spinner animation="grow" className="mt-3" />}
+      {errors && (
+        <ListGroup className="mt-1 mx-5">
+          <ListGroup.Item variant="danger">
+            <strong>Something has gone wrong please come back again</strong>
+          </ListGroup.Item>
+        </ListGroup>
+      )}
       <div className="card-body p-4">
         <div className="form-outline mb-4">
           <form onSubmit={submitComment}>
