@@ -19,12 +19,15 @@ export const TOGGLE_LYRICS = "TOGGLE_LYRICS";
 export const myLogin = () => {
   return async (dispatch) => {
     try {
+      console.log("me Action try");
       const response = await fetch(`${process.env.REACT_APP_URL}/users/me`, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
         },
       });
       if (response.ok) {
+        console.log("me Action .ok");
+
         const res = await response.json();
 
         dispatch({
@@ -37,11 +40,19 @@ export const myLogin = () => {
         });
       } else {
         dispatch({
+          type: LOADING_ME,
+          payload: false,
+        });
+        dispatch({
           type: ERROR_ME,
           payload: true,
         });
       }
     } catch (error) {
+      dispatch({
+        type: LOADING_ME,
+        payload: false,
+      });
       console.log(error);
       dispatch({
         type: ERROR_ME,
@@ -72,11 +83,19 @@ export const myBlogs = () => {
         });
       } else {
         dispatch({
+          type: LOADING_BLOG,
+          payload: false,
+        });
+        dispatch({
           type: ERROR_BLOG,
           payload: true,
         });
       }
     } catch (error) {
+      dispatch({
+        type: LOADING_BLOG,
+        payload: false,
+      });
       console.log(error);
       dispatch({
         type: ERROR_BLOG,
@@ -107,11 +126,19 @@ export const myLyrics = () => {
         });
       } else {
         dispatch({
+          type: LOADING_LYRICS,
+          payload: false,
+        });
+        dispatch({
           type: ERROR_LYRICS,
           payload: true,
         });
       }
     } catch (error) {
+      dispatch({
+        type: LOADING_LYRICS,
+        payload: false,
+      });
       console.log(error);
       dispatch({
         type: ERROR_LYRICS,
@@ -147,6 +174,10 @@ export const getComments = (id) => {
           payload: res,
         });
       } else {
+        dispatch({
+          type: LOADING_COMMENTS,
+          payload: false,
+        });
         alert("something Wrong");
         dispatch({
           type: ERROR_COMMENTS,
@@ -154,6 +185,10 @@ export const getComments = (id) => {
         });
       }
     } catch (error) {
+      dispatch({
+        type: LOADING_COMMENTS,
+        payload: false,
+      });
       console.log("catcherrr comment action");
       console.log(error);
       dispatch({
@@ -190,6 +225,10 @@ export const getBlogComments = (id) => {
           payload: res,
         });
       } else {
+        dispatch({
+          type: LOADING_BLOG_COMMENTS,
+          payload: false,
+        });
         alert("something Wrong");
         dispatch({
           type: ERROR_BLOG_COMMENTS,
@@ -197,6 +236,10 @@ export const getBlogComments = (id) => {
         });
       }
     } catch (error) {
+      dispatch({
+        type: LOADING_BLOG_COMMENTS,
+        payload: false,
+      });
       console.log("catcherrr comment action");
       console.log(error);
       dispatch({
