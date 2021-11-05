@@ -1,14 +1,26 @@
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+  ListGroup,
+} from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { jwtId } from "../../../utils";
-const AddLyrics = () => {
+import { withRouter } from "react-router";
+
+const AddLyrics = (props) => {
   // console.log("id", jwtId(window.localStorage.getItem("Token"))._id);
 
   const [startDate, setStartDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(false);
 
   const [lyrics, setLyrics] = useState({
     artist: "",
@@ -16,6 +28,7 @@ const AddLyrics = () => {
     mezmurType: "",
     officialLyric: "",
     youtubeLink: "",
+    coverImage: "",
     releaseDate: startDate,
     userId: jwtId(window.localStorage.getItem("Token"))._id,
   });
@@ -38,6 +51,7 @@ const AddLyrics = () => {
   const handlelyrics = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await fetch(`${process.env.REACT_APP_URL}/lyrics`, {
         method: "POST",
         headers: {
@@ -47,22 +61,35 @@ const AddLyrics = () => {
         body: JSON.stringify(lyrics),
       });
       if (response.ok) {
-        alert("Great");
+        setLoading(false);
 
-        // props.history.push("/");
+        // alert("Great");
+
+        props.history.push("/");
         const res = await response.json();
         // window.localStorage.setItem("Token", res.accessToken);
         console.log(res);
       } else {
-        alert("something wrong");
+        setLoading(false);
+        setErrors(true);
+        // alert("something wrong");
       }
     } catch (error) {
+      setErrors(true);
       console.log(error);
     }
   };
 
   return (
     <Container className="mb-5">
+      {loading && <Spinner animation="grow" className="mt-3" />}
+      {errors && (
+        <ListGroup className="mt-1 mx-5">
+          <ListGroup.Item variant="danger">
+            <strong>Something has gone wrong please come back again</strong>
+          </ListGroup.Item>
+        </ListGroup>
+      )}
       <Row>
         <Col xs={6}>
           <Form onSubmit={handlelyrics}>
@@ -120,6 +147,16 @@ const AddLyrics = () => {
                 value={lyrics.youtubeLink}
               />
             </Form.Group>
+            <Form.Group>
+              <Form.Label>Cover photo of the Song</Form.Label>
+              <Form.Control
+                type="text"
+                id="coverImage"
+                placeholder="coverPhoto.png"
+                onChange={(e) => handleChange("coverImage", e.target.value)}
+                value={lyrics.coverImage}
+              />
+            </Form.Group>
             <Form.Group id="formGroupDate">
               <Form.Label>Release Date</Form.Label>
               <DatePicker
@@ -159,4 +196,4 @@ const AddLyrics = () => {
     </Container>
   );
 };
-export default AddLyrics;
+export default withRouter(AddLyrics);
