@@ -40,14 +40,11 @@ const BlogComments = (props) => {
       );
       if (response.ok) {
         setLoading(false);
-        // alert("commented");
-        const resp = await response.json();
-        comments.unshift(resp);
+        dispatch(getBlogComments(id));
         setComment("");
       } else {
         setLoading(false);
         setErrors(true);
-        alert("something Wrong");
       }
     } catch (error) {
       setLoading(false);

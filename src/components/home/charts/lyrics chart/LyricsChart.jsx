@@ -34,7 +34,7 @@ const LyricsChart = () => {
             </ListGroup>
           )}
           <Table striped bordered hover>
-            <tbody>
+            <tbody className="text-left">
               {lyrics.map((lyric, i) => (
                 <tr key={lyric._id}>
                   <td>

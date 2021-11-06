@@ -75,7 +75,7 @@ const BlogOneComment = ({ match, comment }) => {
     }
   };
 
-  console.log("1comment", comment);
+  console.log("1comment1", comment);
   // console.log("1comment", lyricsLikes);
   // console.log("1comment", me);
   return (
@@ -122,6 +122,7 @@ const BlogOneComment = ({ match, comment }) => {
                   className="rounded-circle mr-1"
                   style={{ width: "25px", height: "25px", objectFit: "cover" }}
                 />
+
                 <p className="small mb-0 ms-2">{comment.userId.username}</p>
               </div>
               <div className="d-flex flex-row align-items-center">

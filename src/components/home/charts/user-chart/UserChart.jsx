@@ -40,7 +40,7 @@ const UserChart = () => {
     <Container className="mt-5">
       <Row>
         <Col>
-          <h3>Top Contribiuters</h3>
+          <h3>Top Contributors</h3>
           {loading && (
             <div className=" h-100 d-flex justify-content-center align-items-center">
               <Spinner animation="grow" className="mt-3" />
@@ -54,13 +54,6 @@ const UserChart = () => {
             </ListGroup>
           )}
           <Table striped bordered hover>
-            {/* <thead>
-              <tr>
-                <th>#</th>
-                <th colSpan="2">First Name</th>
-                <th>Last Name</th>
-              </tr>
-            </thead> */}
             <tbody>
               {editors.map((user, i) => (
                 <tr>
