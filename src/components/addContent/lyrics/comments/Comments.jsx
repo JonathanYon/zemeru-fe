@@ -1,3 +1,4 @@
+import { Spinner, ListGroup } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import OneComment from "./OneComment";
 import { withRouter } from "react-router";
@@ -9,6 +10,8 @@ import { useSelector } from "react-redux";
 const Comments = (props) => {
   const [comment, setComment] = useState("");
   const [commentClick, setCommentClick] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(false);
   const comments = useSelector((state) => state.lyricsComments.comments);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -23,6 +26,7 @@ const Comments = (props) => {
       comment,
     };
     try {
+      setLoading(true);
       const response = await fetch(
         `${process.env.REACT_APP_URL}/lyrics/post/${id}`,
         {
@@ -35,14 +39,16 @@ const Comments = (props) => {
         }
       );
       if (response.ok) {
-        // alert("commented");
-        const resp = await response.json();
-        comments.unshift(resp);
+        setLoading(false);
+        dispatch(getComments(id));
         setComment("");
       } else {
-        alert("something Wrong");
+        setLoading(false);
+        setErrors(true);
       }
     } catch (error) {
+      setLoading(false);
+      setErrors(true);
       console.log(error);
     }
   };
@@ -54,6 +60,13 @@ const Comments = (props) => {
       className="card shadow-0 border"
       style={{ backgroundColor: "#f0f2f5" }}
     >
+      {errors && (
+        <ListGroup className="mt-1 mx-5">
+          <ListGroup.Item variant="danger">
+            <strong>Something has gone wrong please come back again</strong>
+          </ListGroup.Item>
+        </ListGroup>
+      )}
       <div className="card-body p-4">
         <div className="form-outline mb-4">
           <form onSubmit={submitComment}>
@@ -86,6 +99,7 @@ const Comments = (props) => {
               </Button>
             )}
           </form>
+          {loading && <Spinner animation="grow" className="mt-3" />}
         </div>
         {comments.map((aComment) => (
           <OneComment comment={aComment} key={aComment._id} />

@@ -75,7 +75,7 @@ const OneComment = ({ match, comment }) => {
     }
   };
 
-  console.log("1comment", comment);
+  // console.log("1comment", comment);
   // console.log("1comment", lyricsLikes);
   // console.log("1comment", me);
   return (

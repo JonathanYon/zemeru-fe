@@ -1,4 +1,12 @@
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+  ListGroup,
+} from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useState } from "react";
@@ -13,6 +21,9 @@ const AddBlog = () => {
     authors: jwtId(window.localStorage.getItem("Token"))._id,
     content: "",
   });
+
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(false);
 
   const handleChange = (key, value) => {
     setContents({ ...contents, [key]: value });
@@ -32,6 +43,7 @@ const AddBlog = () => {
   const handleBlog = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await fetch(`${process.env.REACT_APP_URL}/blogs`, {
         method: "POST",
         headers: {
@@ -41,22 +53,35 @@ const AddBlog = () => {
         body: JSON.stringify(contents),
       });
       if (response.ok) {
-        alert("Great");
+        setLoading(false);
+        // alert("Great");
 
         // props.history.push("/");
         const res = await response.json();
         // window.localStorage.setItem("Token", res.accessToken);
         console.log(res);
       } else {
-        alert("something wrong");
+        // alert("something wrong");
+        setLoading(false);
+        setErrors(true);
       }
     } catch (error) {
+      setLoading(false);
+      setErrors(true);
       console.log(error);
     }
   };
 
   return (
     <Container>
+      {loading && <Spinner animation="grow" className="mt-3" />}
+      {errors && (
+        <ListGroup className="mt-1 mx-5">
+          <ListGroup.Item variant="danger">
+            <strong>Something has gone wrong please come back again</strong>
+          </ListGroup.Item>
+        </ListGroup>
+      )}
       <Row>
         <Col xs={6}>
           <Form onSubmit={handleBlog}>
