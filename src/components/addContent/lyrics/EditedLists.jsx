@@ -7,7 +7,7 @@ const EditedLists = ({ match, history }) => {
     const { lId, eId } = match.params;
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_URL}/lyrics/approve/${lId}/admin/${eId}`,
+        `${process.env.REACT_APP_URL}/lyrics/reject/${lId}/admin/${eId}`,
         {
           method: "DELETE",
           headers: {
