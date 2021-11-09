@@ -1,5 +1,13 @@
-import { useState } from "react";
-import { Container, Row, Col, Button, Modal, ListGroup } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Modal,
+  ListGroup,
+  Badge,
+} from "react-bootstrap";
 import { BiPencil } from "react-icons/bi";
 import FeedCard from "./card/FeedCard";
 import LeftCard from "./card/LeftCard";
@@ -12,6 +20,7 @@ const Me = ({ me }) => {
   const [show, setShow] = useState(false);
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [myComments, setmyComments] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -107,11 +116,41 @@ const Me = ({ me }) => {
     }
   };
 
+  useEffect(() => {
+    const getMyComments = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_URL}/users/lyrics/comments/me`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const res = await response.json();
+          setmyComments(res);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getMyComments();
+  }, []);
+  // console.log("myComment", myComments);
+  const noOfComments = myComments?.commAndID
+    .map((ele) => ele.comments)
+    .flat().length;
+  const noOfEdits = myComments?.myEdits.filter(
+    (ele) => ele.userId === me?._id
+  ).length;
+
   return (
     <>
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Update Bio/Avatar</Modal.Title>
           {loading && (
             <ListGroup>
               <ListGroup.Item variant="success">
@@ -182,11 +221,21 @@ const Me = ({ me }) => {
                 <div className="mt-4 text-white mr-5">
                   <strong>Featured</strong>
                 </div>
-                <div className="mt-4 text-white mr-5">
-                  <strong>Followers</strong>
+                <div className="mt-4 text-white mr-3">
+                  <strong className="d-flex">
+                    <span className="text-warning mr-1">
+                      {me.followers.length}
+                    </span>
+                    <span>Followers</span>
+                  </strong>
                 </div>
-                <div className="mt-4 text-white mr-5">
-                  <strong>Following</strong>
+                <div className="mt-4 text-white mr-3">
+                  <strong className="d-flex">
+                    <span className="text-warning mr-1">
+                      {me.following.length}
+                    </span>
+                    <span>Following</span>
+                  </strong>
                 </div>
               </div>
             </Col>
@@ -197,7 +246,10 @@ const Me = ({ me }) => {
       <Container className="mt-5 mb-5">
         <Row>
           <Col xs={4}>
-            <h5>@{me?.username}</h5>
+            <h5>
+              @{me?.username}
+              <Badge variant="warning ml-1">{me.token}</Badge>
+            </h5>
             <Button
               className="bg-light text-black-50 mb-2"
               onClick={handleShow}
@@ -206,11 +258,22 @@ const Me = ({ me }) => {
               Edit
             </Button>
             <LeftCard bio={me.bio} />
-            <StatsCard title="hiiiiiiiiii" />
+            <StatsCard
+              commentNumber={noOfComments}
+              lyricNum={myComments?.lyrics.length}
+              editNum={noOfEdits}
+            />
           </Col>
-          <Col xs={6}>
+          <Col xs={8}>
             <p>hello</p>
-            <FeedCard />
+            {myComments?.commAndID.map((comment) => (
+              <FeedCard
+                comment={comment}
+                lyrID={myComments?.id}
+                lyrTitle={myComments?.title}
+                key={comment.id}
+              />
+            ))}
           </Col>
         </Row>
       </Container>
