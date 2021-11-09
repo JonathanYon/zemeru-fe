@@ -1,19 +1,15 @@
 import { useState } from "react";
-import {
-  Jumbotron,
-  Container,
-  Row,
-  Col,
-  Button,
-  Modal,
-  ListGroup,
-} from "react-bootstrap";
+import { Container, Row, Col, Button, Modal, ListGroup } from "react-bootstrap";
+import { BiPencil } from "react-icons/bi";
+import FeedCard from "./card/FeedCard";
 import LeftCard from "./card/LeftCard";
+import StatsCard from "./card/StatsCard";
 import "./me.css";
 
 const Me = ({ me }) => {
-  const [show, setShow] = useState(false);
   const [avatar, setAvatar] = useState("");
+  const [bio, setBio] = useState("");
+  const [show, setShow] = useState(false);
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -56,6 +52,61 @@ const Me = ({ me }) => {
     }
   };
 
+  //bio
+  const updateBio = async () => {
+    // e.preventDefault();
+    try {
+      if (bio && avatar) {
+        const payload = {
+          bio: bio,
+        };
+
+        // const { id } = match.params;
+        const response = await fetch(`${process.env.REACT_APP_URL}/users/me`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          method: "PUT",
+          body: JSON.stringify(payload),
+        });
+
+        addAvatar();
+
+        if (response.ok) {
+          alert("Updated both");
+          // const resp = await response.json()
+        } else {
+          alert("somethin wrong in update");
+        }
+      } else if (bio) {
+        const payload = {
+          bio: bio,
+        };
+        const response = await fetch(`${process.env.REACT_APP_URL}/users/me`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          method: "PUT",
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          alert("Update bio only");
+          // const resp = await response.json()
+        } else {
+          alert("somethin wrong in update");
+        }
+      } else if (avatar) {
+        addAvatar();
+        alert("Update avatar only");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Modal show={show} onHide={handleClose} animation={false}>
@@ -79,6 +130,14 @@ const Me = ({ me }) => {
         <Modal.Body>
           <div>
             <form encType="multipart/form-data" action="">
+              <textarea
+                name="bio"
+                id=""
+                cols="30"
+                rows="10"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              />
               <input
                 id="id-for-upload-file"
                 type="file"
@@ -88,44 +147,54 @@ const Me = ({ me }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button> */}
-          <Button variant="primary" onClick={addAvatar}>
+          <Button variant="primary" onClick={updateBio}>
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
-      <Jumbotron
+
+      <Container
         fluid
+        className=" big-info-container"
         style={{
           backgroundImage: `url(${me?.avatar})`,
           backgroundRepeat: "repeat-x",
           backgroundSize: "100% 100%",
+          objectFit: "cover",
         }}
       >
-        <Container className="text-black position-relative">
-          {/* <p>
-            This is a modified jumbotron that occupies the entire horizontal
-            space of its parent.
-          </p> */}
-          <div className="my-photo ">
-            <img
-              // src="https://www.gannett-cdn.com/-mm-/fd5c5b5393c72a785789f0cd5bd20acedd2d2804/c=0-350-2659-1850/local/-/media/Phoenix/BillGoodykoontz/2014/04/24//1398388295000-Homer-Simpson.jpg"
-              src={me?.avatar}
-              alt=""
-              className="photo"
-            />
-          </div>
+        <Container className="info-container">
+          <Row style={{ height: "40vh" }}>
+            <Col>
+              <Col className="position-relative d-flex">
+                <div className="text-white mt-5 d-flex">
+                  <img
+                    src={me?.avatar}
+                    alt=""
+                    className="mezmur-cover mt-5 rounded-circle"
+                    style={{ height: "14vw", width: "14vw" }}
+                  />
+                </div>
+              </Col>
+            </Col>
+            <Col className="mt-5 position-relative">
+              <div className="follow d-flex mt-5">
+                <div className="mt-4 text-white mr-5">
+                  <strong>Featured</strong>
+                </div>
+                <div className="mt-4 text-white mr-5">
+                  <strong>Followers</strong>
+                </div>
+                <div className="mt-4 text-white mr-5">
+                  <strong>Following</strong>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Container>
-        <div className="d-flex follow text-black">
-          <small className="pr-4">Featured</small>
-          <small className="pr-4">Followers</small>
-          <small className="pr-4">Following</small>
-        </div>
-      </Jumbotron>
+      </Container>
 
-      <Container className="mt-5">
+      <Container className="mt-5 mb-5">
         <Row>
           <Col xs={4}>
             <h5>@{me?.username}</h5>
@@ -133,14 +202,15 @@ const Me = ({ me }) => {
               className="bg-light text-black-50 mb-2"
               onClick={handleShow}
             >
+              <BiPencil />
               Edit
             </Button>
-            <LeftCard />
-            <LeftCard />
+            <LeftCard bio={me.bio} />
+            <StatsCard title="hiiiiiiiiii" />
           </Col>
           <Col xs={6}>
-            <LeftCard />
-            <LeftCard />
+            <p>hello</p>
+            <FeedCard />
           </Col>
         </Row>
       </Container>
