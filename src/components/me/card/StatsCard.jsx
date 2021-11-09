@@ -6,7 +6,7 @@ import { GrEdit } from "react-icons/gr";
 
 import { useState } from "react";
 
-const StatsCard = (props) => {
+const StatsCard = ({ commentNumber, lyricNum, editNum }) => {
   return (
     <Card className="left-card mt-5 py-3">
       <Container>
@@ -14,19 +14,22 @@ const StatsCard = (props) => {
           <Col className="d-flex justify-content-lg-between">
             <div className="mr-0 d-flex flex-column">
               <div>
-                5<MdComment className="ml-3 stat-icons" />
+                {commentNumber}
+                <MdComment className="ml-3 stat-icons" />
               </div>
               <small className="icon-name">Comment/Suggestion</small>
             </div>
             <div className="mr-0 d-flex flex-column">
               <div>
-                5<IoNewspaper className="ml-3 stat-icons" />
+                {lyricNum}
+                <IoNewspaper className="ml-3 stat-icons" />
               </div>
               <small className="icon-name">Transcription</small>
             </div>
             <div className="mr-0 d-flex flex-column">
               <div>
-                5<GrEdit className="ml-3 stat-icons" />
+                {editNum}
+                <GrEdit className="ml-3 stat-icons" />
               </div>
               <small className="icon-name">Lyrics Edit</small>
             </div>
