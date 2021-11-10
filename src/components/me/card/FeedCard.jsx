@@ -57,7 +57,11 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history }) => {
       {lyrIwrite && (
         <>
           {lyrIwrite.map((song, i) => (
-            <Card className="left-card mt-1 py-3" key={i + 1}>
+            <Card
+              className="left-card mt-1 py-3"
+              key={i + 1}
+              onClick={() => history.push(`/lyric/${song._id}`)}
+            >
               <Container>
                 <Row>
                   <Col className="d-flex justify-content-lg-between">
@@ -112,7 +116,7 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history }) => {
                       </div>
                       <div>
                         {blogComment.comments.map((com, i) => (
-                          <Badge variant="success" className="mr-1" key={i + 1}>
+                          <Badge variant="primary" className="mr-1" key={i + 1}>
                             {com}
                           </Badge>
                         ))}
