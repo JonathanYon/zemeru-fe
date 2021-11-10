@@ -12,3 +12,13 @@
   top: 41%;
   left: 38%;
 }
+
+.stat-icons {
+  font-size: xx-large;
+}
+.icon-name {
+  font-size: xx-small;
+}
+.feed-date {
+  font-size: 10px;
+}
