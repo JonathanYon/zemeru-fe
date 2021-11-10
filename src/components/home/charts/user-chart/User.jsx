@@ -4,11 +4,13 @@ import "../chart.css";
 import UserBio from "./UserBio";
 import UserFeedCard from "./UserFeedCard";
 import UserStatsCard from "./UserStats";
+import { BsJournalText } from "react-icons/bs";
 
 const User = ({ match }) => {
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [oneUser, setOneUser] = useState(null);
+  const [follow, setfollow] = useState(true);
   const [myComments, setMyComments] = useState(null);
   const [myCommentsBlog, setMyCommentsBlog] = useState(null);
 
@@ -34,7 +36,7 @@ const User = ({ match }) => {
       }
     };
     getMyBlogComments();
-  }, []);
+  }, [follow]);
   console.log("user", oneUser);
 
   useEffect(() => {
@@ -93,6 +95,31 @@ const User = ({ match }) => {
   }, []);
   console.log("myCommentblog-", myCommentsBlog);
 
+  //follow
+  const followUsers = async (user) => {
+    const payload = {
+      userId: user,
+    };
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/users/following/me`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          method: "POST",
+          body: JSON.stringify(payload),
+        }
+      );
+      if (response.ok) {
+        setfollow(!follow);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Container
@@ -122,6 +149,7 @@ const User = ({ match }) => {
             <Col className="mt-5 position-relative">
               <div className="follow d-flex mt-5">
                 <div className="mt-4 text-white mr-5">
+                  <BsJournalText className=" mr-1" />
                   <strong>Featured</strong>
                 </div>
                 <div className="mt-4 text-white mr-3">
@@ -154,10 +182,10 @@ const User = ({ match }) => {
               <Badge variant="warning ml-1">{oneUser?.token}</Badge>
             </h5>
             <Button
-              className="bg-light text-black-50 mb-2"
-              //   onClick={handleShow}
+              className="bg-light text-dark font-weight-bold mb-2"
+              onClick={async () => followUsers(oneUser?._id)}
             >
-              Follow
+              {follow ? "Follow" : "Following"}
             </Button>
             <UserBio bio={oneUser?.bio} />
             <UserStatsCard
