@@ -21,6 +21,7 @@ const Me = ({ me }) => {
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [myComments, setmyComments] = useState(null);
+  const [myCommentsBlog, setmyCommentsBlog] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -146,6 +147,30 @@ const Me = ({ me }) => {
     (ele) => ele.userId === me?._id
   ).length;
 
+  useEffect(() => {
+    const getMyBlogComments = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_URL}/users/blogs/comments/me`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const res = await response.json();
+          setmyCommentsBlog(res);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getMyBlogComments();
+  }, []);
+  console.log("myCommentblog", myCommentsBlog);
+
   return (
     <>
       <Modal show={show} onHide={handleClose} animation={false}>
@@ -265,14 +290,15 @@ const Me = ({ me }) => {
             />
           </Col>
           <Col xs={8}>
-            <p>hello</p>
             {myComments?.commAndID.map((comment) => (
               <FeedCard
                 comment={comment}
-                lyrID={myComments?.id}
-                lyrTitle={myComments?.title}
                 key={comment.id}
+                lyrIwrite={myComments.lyrics}
               />
+            ))}
+            {myCommentsBlog?.map((comment) => (
+              <FeedCard blogComment={comment} key={comment.id} />
             ))}
           </Col>
         </Row>
