@@ -42,7 +42,7 @@ const LyricsChart = () => {
                     <img
                       src={lyric.coverImage}
                       alt="mezmur cover photo"
-                      className="rounded-circle ml-1"
+                      className="rounded-circle ml-3"
                       style={{
                         width: "30px",
                         height: "30px",
