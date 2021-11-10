@@ -294,12 +294,14 @@ const Me = ({ me }) => {
               <FeedCard
                 comment={comment}
                 key={comment.id}
-                lyrIwrite={myComments.lyrics}
+                // lyrIwrite={myComments.lyrics}
               />
             ))}
             {myCommentsBlog?.map((comment) => (
               <FeedCard blogComment={comment} key={comment.id} />
             ))}
+            {myComments?.lyrics &&
+              myComments?.lyrics?.map((lyr) => <FeedCard lyrIwrite={lyr} />)}
           </Col>
         </Row>
       </Container>

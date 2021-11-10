@@ -15,6 +15,7 @@ import BlogContent from "./components/home/blogRow/single-blog/BlogContent";
 import Lyrics from "./components/addContent/lyrics/Lyrics";
 import LyricsAdminPage from "./components/addContent/lyrics/LyricsAdminPage";
 import EditedLists from "./components/addContent/lyrics/EditedLists";
+import User from "./components/home/charts/user-chart/User";
 
 function App() {
   const [logged, setLogged] = useState(false);
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/adminPage" component={LyricsAdminPage} />
           <Route exact path="/addLyrics" component={AddLyrics} />
           <Route exact path="/addBlog" component={AddBlog} />
+          <Route exact path="/user/:id" component={User} />
           <Route
             exact
             path="/edited/:lId/lyrics/:eId"
