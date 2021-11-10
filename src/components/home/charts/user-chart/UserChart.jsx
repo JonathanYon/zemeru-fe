@@ -6,10 +6,13 @@ import {
   Table,
   Spinner,
   ListGroup,
+  Badge,
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { myLyrics } from "../../../../Redux/action";
+import { FaCoins } from "react-icons/fa";
+import "../chart.css";
 
 const UserChart = () => {
   const contributer = useSelector((state) => state.allLyrics.lyrics);
@@ -23,11 +26,15 @@ const UserChart = () => {
   const editors = uniqueUser(userID, (it) => it._id);
   const userContrib = contributer.map((element) => {
     const holder = [];
-    holder.push({ title: element.title, username: element.userId.username });
+    holder.push({
+      title: element.title,
+      username: element.userId.username,
+      token: element.userId.token,
+    });
     // return holder
-    console.log(holder);
+    console.log("holder", editors);
   });
-  // console.log("repeate", contributer);
+  // console.log("contributer", contributer);
 
   // console.log("unique", editors);
   const dispatch = useDispatch();
@@ -56,23 +63,25 @@ const UserChart = () => {
           <Table striped bordered hover>
             <tbody>
               {editors.map((user, i) => (
-                <tr>
+                <tr className="d-flex justify-content-between">
                   <td>
-                    {/* {i + 1} */}
                     {i + 1}.
                     <img
                       src={user.avatar}
                       alt="mezmur cover photo"
-                      className="rounded-circle ml-1"
+                      className="rounded-circle ml-3 mr-3"
                       style={{
                         width: "30px",
                         height: "30px",
                         objectFit: "cover",
                       }}
                     />
+                    {user.username}
                   </td>
-                  <td colSpan="2">{user.username}</td>
-                  <td>@twitter</td>
+                  <td className=" mr-5">
+                    <FaCoins className="text-warning coin mr-2" />
+                    <Badge variant="warning">{user.token}</Badge>
+                  </td>
                 </tr>
               ))}
             </tbody>
