@@ -5,15 +5,21 @@ import { MdComment } from "react-icons/md";
 import { IoNewspaper } from "react-icons/io5";
 import { GrEdit } from "react-icons/gr";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { withRouter } from "react-router";
 
-const FeedCard = ({ comment, lyrIwrite, blogComment }) => {
-  //   console.log(lyrIwrite)
+const FeedCard = ({ comment, lyrIwrite, blogComment, history }) => {
+  console.log("lyrIwrotr", lyrIwrite);
+  console.log("comment", comment);
+  console.log("blogComment", blogComment);
 
   return (
     <>
       <>
         {comment && (
-          <Card className="left-card mt-1 py-3">
+          <Card
+            className="left-card mt-1 py-3"
+            onClick={() => history.push(`/lyric/${comment.id}`)}
+          >
             <Container>
               <Row>
                 <Col className="d-flex justify-content-lg-between">
@@ -84,7 +90,10 @@ const FeedCard = ({ comment, lyrIwrite, blogComment }) => {
       )}
       <>
         {blogComment && (
-          <Card className="left-card mt-1 py-3">
+          <Card
+            className="left-card mt-1 py-3"
+            onClick={() => history.push(`/blogs/${blogComment.id}`)}
+          >
             <Container>
               <Row>
                 <Col className="d-flex justify-content-lg-between">
@@ -125,4 +134,4 @@ const FeedCard = ({ comment, lyrIwrite, blogComment }) => {
     </>
   );
 };
-export default FeedCard;
+export default withRouter(FeedCard);
