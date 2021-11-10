@@ -13,8 +13,9 @@ import { useSelector } from "react-redux";
 import { myLyrics } from "../../../../Redux/action";
 import { FaCoins } from "react-icons/fa";
 import "../chart.css";
+import { withRouter } from "react-router";
 
-const UserChart = () => {
+const UserChart = ({ history }) => {
   const contributer = useSelector((state) => state.allLyrics.lyrics);
   const loading = useSelector((state) => state.blogs.loading);
   const errors = useSelector((state) => state.blogs.error);
@@ -64,7 +65,10 @@ const UserChart = () => {
             <tbody>
               {editors.map((user, i) => (
                 <tr className="d-flex justify-content-between">
-                  <td>
+                  <td
+                    onClick={() => history.push(`/user/${user._id}`)}
+                    className="user-chart-name"
+                  >
                     {i + 1}.
                     <img
                       src={user.avatar}
@@ -91,4 +95,4 @@ const UserChart = () => {
     </Container>
   );
 };
-export default UserChart;
+export default withRouter(UserChart);
