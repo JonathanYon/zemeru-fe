@@ -1,3 +1,36 @@
 .coin {
   font-size: 20px;
 }
+.left-card {
+  width: 90%;
+  height: fit-content;
+  background-color: white;
+  cursor: pointer;
+}
+.photo {
+  width: 14vw;
+  height: 14vw;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 1.4%;
+  object-fit: cover;
+}
+.follow {
+  position: absolute;
+  top: 41%;
+  left: 38%;
+}
+
+.stat-icons {
+  font-size: xx-large;
+}
+.icon-name {
+  font-size: xx-small;
+}
+.feed-date {
+  font-size: 10px;
+}
+.user-chart-name {
+  cursor: pointer;
+}
