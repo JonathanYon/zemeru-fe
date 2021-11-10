@@ -7,7 +7,7 @@ import { GrEdit } from "react-icons/gr";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { withRouter } from "react-router";
 
-const FeedCard = ({ comment, lyrIwrite, blogComment, history }) => {
+const FeedCard = ({ comment, lyrIwrite, blogComment, history, me }) => {
   console.log("lyrIwrotr", lyrIwrite);
   console.log("comment", comment);
   console.log("blogComment", blogComment);
@@ -54,44 +54,41 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history }) => {
           </Card>
         )}
       </>
-      {lyrIwrite && (
-        <>
-          {lyrIwrite.map((song, i) => (
-            <Card
-              className="left-card mt-1 py-3"
-              key={i + 1}
-              onClick={() => history.push(`/lyric/${song._id}`)}
-            >
-              <Container>
-                <Row>
-                  <Col className="d-flex justify-content-lg-between">
-                    <div className="d-flex">
-                      <div className="mr-3">
-                        <IoNewspaper className="text-primary" />
+      <>
+        {lyrIwrite && (
+          <Card
+            className="left-card mt-1 py-3"
+            onClick={() => history.push(`/lyric/${lyrIwrite._id}`)}
+          >
+            <Container>
+              <Row>
+                <Col className="d-flex justify-content-lg-between">
+                  <div className="d-flex">
+                    <div className="mr-3">
+                      <IoNewspaper className="text-primary" />
+                    </div>
+                    <div className="text-left mr-5">
+                      <div>
+                        You transcribed {lyrIwrite.title} by {lyrIwrite.artist}
                       </div>
-                      <div className="text-left mr-5">
-                        <div>
-                          You transcribed {song.title} by {song.artist}
-                        </div>
 
-                        <div>
-                          <strong>Lyrics Title {song.title}</strong>
-                        </div>
+                      <div>
+                        <strong>Lyrics Title {lyrIwrite.title}</strong>
                       </div>
                     </div>
-                    <div className="d-flex flex-column">
-                      <FaRegCalendarAlt className="mb-1 ml-3" />
-                      <span className="feed-date">
-                        {formatDistanceToNow(new Date(2021, 11, 7))}
-                      </span>
-                    </div>
-                  </Col>
-                </Row>
-              </Container>
-            </Card>
-          ))}
-        </>
-      )}
+                  </div>
+                  <div className="d-flex flex-column">
+                    <FaRegCalendarAlt className="mb-1 ml-3" />
+                    <span className="feed-date">
+                      {formatDistanceToNow(new Date(2021, 11, 7))}
+                    </span>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </Card>
+        )}
+      </>
       <>
         {blogComment && (
           <Card
