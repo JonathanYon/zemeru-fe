@@ -187,6 +187,82 @@ const User = ({ match }) => {
 
   return (
     <>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          {/* <Modal.Title>Conversation with ?</Modal.Title> */}
+        </Modal.Header>
+        <Modal.Body class=" position-relative">
+          {/* <div>hello</div>
+          <form>
+            <input
+              type="text"
+              id="addANote"
+              className="form-control"
+              placeholder="Type your message here..."
+              value={message}
+              // onClick={() => setCommentClick(true)}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </form> */}
+          <header class="page-header">
+            <div class="container ">
+              <h2>Felipe</h2>
+            </div>
+          </header>
+          <div class="main">
+            <div class="container ">
+              <div class="chat-log">
+                <div class="chat-log__item">
+                  <h3 class="chat-log__author">
+                    Felipe <small>14:30</small>
+                  </h3>
+                  <div class="chat-log__message">Yo man</div>
+                </div>
+                <div class="chat-log__item chat-log__item--own">
+                  <h3 class="chat-log__author">
+                    Fabrício <small>14:30</small>
+                  </h3>
+                  <div class="chat-log__message">BRB</div>
+                </div>
+              </div>
+            </div>
+            <div className="position-relative">
+              <div class="chat-form">
+                <div class="container ">
+                  <form class="form-horizontal">
+                    <div class="row">
+                      <div class="col-sm-10 col-xs-8">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id=""
+                          placeholder="Message"
+                        />
+                      </div>
+                      <div class="col-sm-2 col-xs-4">
+                        <button type="submit" class="btn btn-success btn-block">
+                          Send
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        {/* <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer> */}
+      </Modal>
+
       <Container
         fluid
         className=" big-info-container"
