@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Badge } from "react-bootstrap";
+import { Container, Row, Col, Button, Badge, Modal } from "react-bootstrap";
 import "../chart.css";
 import UserBio from "./UserBio";
 import UserFeedCard from "./UserFeedCard";
 import UserStatsCard from "./UserStats";
 import { BsJournalText } from "react-icons/bs";
+import { FaEnvelope } from "react-icons/fa";
 
 const User = ({ match }) => {
   const [errors, setErrors] = useState(false);
@@ -13,6 +14,12 @@ const User = ({ match }) => {
   const [follow, setfollow] = useState(true);
   const [myComments, setMyComments] = useState(null);
   const [myCommentsBlog, setMyCommentsBlog] = useState(null);
+  const [show, setShow] = useState(false);
+  const [chatWithUser, setChatWithUser] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const getMyBlogComments = async () => {
@@ -37,7 +44,7 @@ const User = ({ match }) => {
     };
     getMyBlogComments();
   }, [follow]);
-  console.log("user", oneUser);
+  // console.log("user", oneUser);
 
   useEffect(() => {
     const getMyComments = async () => {
@@ -62,7 +69,7 @@ const User = ({ match }) => {
     };
     getMyComments();
   }, []);
-  console.log("myComments", myComments);
+  // console.log("myComments", myComments);
   const noOfComments = myComments?.commAndID
     .map((ele) => ele.comments)
     .flat().length;
@@ -93,7 +100,7 @@ const User = ({ match }) => {
     };
     getMyBlogComments();
   }, []);
-  console.log("myCommentblog-", myCommentsBlog);
+  // console.log("myCommentblog-", myCommentsBlog);
 
   //follow
   const followUsers = async (user) => {
@@ -119,6 +126,35 @@ const User = ({ match }) => {
       console.log(error);
     }
   };
+
+  //get chat with this user
+  useEffect(() => {
+    const getChatsWithUser = async () => {
+      const { id } = match.params;
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_URL}/messages/${id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            },
+          }
+        );
+        if (response.ok) {
+          console.log("ok");
+          const res = await response.json();
+          setChatWithUser(res);
+        } else {
+          alert("chat wrong??");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getChatsWithUser();
+  }, [message]);
+  console.log("getallchat**", chatWithUser);
 
   return (
     <>
@@ -186,6 +222,12 @@ const User = ({ match }) => {
               onClick={async () => followUsers(oneUser?._id)}
             >
               {follow ? "Follow" : "Following"}
+            </Button>
+            <Button
+              className="bg-light text-dark font-weight-bold mb-2 ml-3"
+              onClick={handleShow}
+            >
+              <FaEnvelope />
             </Button>
             <UserBio bio={oneUser?.bio} />
             <UserStatsCard
