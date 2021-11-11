@@ -156,6 +156,35 @@ const User = ({ match }) => {
   }, [message]);
   console.log("getallchat**", chatWithUser);
 
+  //post chat
+  const startChatWithUser = async () => {
+    const { id } = match.params;
+    const payload = {
+      message: message,
+    };
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/messages/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          method: "POST",
+          body: JSON.stringify(payload),
+        }
+      );
+      if (response.ok) {
+        const res = await response.json();
+        console.log(res);
+      } else {
+        alert("chat wrong??");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Container
