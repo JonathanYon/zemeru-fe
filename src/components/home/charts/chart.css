@@ -34,3 +34,54 @@
 .user-chart-name {
   cursor: pointer;
 }
+/* chat modal */
+.page-header {
+  background: #006a4e;
+  margin: 0;
+  padding: 20px 0 10px;
+  color: #ffffff;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+.main {
+  height: auto;
+  padding-top: 70px;
+}
+
+.chat-log {
+  padding: 40px 0 114px;
+  height: auto;
+  overflow: auto;
+}
+.chat-log__item {
+  background: #fafafa;
+  padding: 10px;
+  margin: 0 auto 20px;
+  max-width: 80%;
+  float: left;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  clear: both;
+}
+
+.chat-log__item.chat-log__item--own {
+  float: right;
+  background: #dcf8c6;
+  text-align: right;
+}
+
+.chat-form {
+  background: #dddddd;
+  padding: 40px 0;
+  position: fixed;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.chat-log__author {
+  margin: 0 auto 0.5em;
+  font-size: 14px;
+  font-weight: bold;
+}
