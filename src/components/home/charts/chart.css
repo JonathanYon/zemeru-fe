@@ -35,9 +35,14 @@
   cursor: pointer;
 }
 /* chat modal */
+.chat-modal {
+  height: 450px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
 .page-header {
   background: #006a4e;
-  margin: 0;
+  margin: -16px;
   padding: 20px 0 10px;
   color: #ffffff;
   position: absolute;
