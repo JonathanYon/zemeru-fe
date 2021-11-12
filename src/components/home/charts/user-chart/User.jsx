@@ -7,6 +7,7 @@ import UserStatsCard from "./UserStats";
 import { BsJournalText } from "react-icons/bs";
 import { FaEnvelope } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import Pusher from "pusher-js";
 
 const User = ({ match }) => {
   const [errors, setErrors] = useState(false);
@@ -160,6 +161,22 @@ const User = ({ match }) => {
   }, [message]);
   console.log("getallchat**", chatWithUser);
 
+  //Pusher
+  useEffect(() => {
+    const pusher = new Pusher("1454545454", {
+      cluster: "eu",
+    });
+
+    const channel = pusher.subscribe("messages");
+    channel.bind("inserted", (data) => {
+      alert(JSON.stringify(data));
+    });
+    const channell = pusher.subscribe("messages");
+    channell.bind("updated", (data) => {
+      alert(JSON.stringify(data));
+    });
+  }, []);
+
   //post chat
   const startChatWithUser = async () => {
     const { id } = match.params;
@@ -180,7 +197,9 @@ const User = ({ match }) => {
       );
       if (response.ok) {
         const res = await response.json();
+        // getChatsWithUser();
         console.log(res);
+        alert("sent chat");
       } else {
         alert("chat wrong??");
       }
@@ -243,7 +262,10 @@ const User = ({ match }) => {
             <div className="position-relative">
               <div className="chat-form">
                 <div className="container ">
-                  <form className="form-horizontal">
+                  <form
+                    className="form-horizontal"
+                    onSubmit={startChatWithUser}
+                  >
                     <div className="row">
                       <div className="col-sm-10 col-xs-8">
                         <input
