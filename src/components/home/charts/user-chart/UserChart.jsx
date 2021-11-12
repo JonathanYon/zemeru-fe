@@ -19,6 +19,7 @@ const UserChart = ({ history }) => {
   const contributer = useSelector((state) => state.allLyrics.lyrics);
   const loading = useSelector((state) => state.blogs.loading);
   const errors = useSelector((state) => state.blogs.error);
+  const me = useSelector((state) => state.user.me);
 
   const userID = [...new Set(contributer.map((user) => user.userId))];
   const uniqueUser = (data, key) => {
@@ -66,7 +67,11 @@ const UserChart = ({ history }) => {
               {editors.map((user, i) => (
                 <tr className="d-flex justify-content-between">
                   <td
-                    onClick={() => history.push(`/user/${user._id}`)}
+                    onClick={() =>
+                      user._id === me?._id
+                        ? history.push(`/me`)
+                        : history.push(`/user/${user._id}`)
+                    }
                     className="user-chart-name"
                   >
                     {i + 1}.
