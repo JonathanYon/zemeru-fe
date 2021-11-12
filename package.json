@@ -9,6 +9,7 @@
     "axios": "^0.24.0",
     "bootstrap": "^4.6.0",
     "date-fns": "^2.25.0",
+    "pusher-js": "^7.0.3",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.4",
     "react-contenteditable": "^3.3.6",

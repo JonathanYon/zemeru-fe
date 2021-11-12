@@ -8,9 +8,9 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { withRouter } from "react-router";
 
 const UserFeedCard = ({ comment, lyrIwrite, blogComment, history, user }) => {
-  console.log("lyrIwrote----", lyrIwrite);
-  console.log("comment", comment);
-  console.log("blogComment", blogComment);
+  // console.log("lyrIwrote----", lyrIwrite);
+  // console.log("comment", comment);
+  // console.log("blogComment", blogComment);
 
   return (
     <>
