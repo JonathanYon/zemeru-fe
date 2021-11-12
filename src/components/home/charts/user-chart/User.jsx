@@ -6,6 +6,7 @@ import UserFeedCard from "./UserFeedCard";
 import UserStatsCard from "./UserStats";
 import { BsJournalText } from "react-icons/bs";
 import { FaEnvelope } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const User = ({ match }) => {
   const [errors, setErrors] = useState(false);
@@ -17,6 +18,9 @@ const User = ({ match }) => {
   const [show, setShow] = useState(false);
   const [chatWithUser, setChatWithUser] = useState([]);
   const [message, setMessage] = useState("");
+
+  const me = useSelector((state) => state.user.me);
+  console.log("me", me);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -44,7 +48,7 @@ const User = ({ match }) => {
     };
     getMyBlogComments();
   }, [follow]);
-  // console.log("user", oneUser);
+  console.log("user", oneUser);
 
   useEffect(() => {
     const getMyComments = async () => {
@@ -144,7 +148,7 @@ const User = ({ match }) => {
         if (response.ok) {
           console.log("ok");
           const res = await response.json();
-          setChatWithUser(res);
+          setChatWithUser(res[0].messages);
         } else {
           alert("chat wrong??");
         }
@@ -192,60 +196,67 @@ const User = ({ match }) => {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        className="chat-modal"
       >
-        <Modal.Header closeButton>
-          {/* <Modal.Title>Conversation with ?</Modal.Title> */}
-        </Modal.Header>
-        <Modal.Body class=" position-relative">
-          {/* <div>hello</div>
-          <form>
-            <input
-              type="text"
-              id="addANote"
-              className="form-control"
-              placeholder="Type your message here..."
-              value={message}
-              // onClick={() => setCommentClick(true)}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-          </form> */}
-          <header class="page-header">
-            <div class="container ">
-              <h2>Felipe</h2>
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body className="position-relative  chat-modal ">
+          <header className="page-header">
+            <div className="container">
+              <h6>{oneUser?.username}</h6>
             </div>
           </header>
-          <div class="main">
-            <div class="container ">
-              <div class="chat-log">
-                <div class="chat-log__item">
-                  <h3 class="chat-log__author">
-                    Felipe <small>14:30</small>
-                  </h3>
-                  <div class="chat-log__message">Yo man</div>
-                </div>
-                <div class="chat-log__item chat-log__item--own">
-                  <h3 class="chat-log__author">
-                    Fabrício <small>14:30</small>
-                  </h3>
-                  <div class="chat-log__message">BRB</div>
-                </div>
+          <div className="main">
+            <div className="container ">
+              <div className="chat-log">
+                {chatWithUser &&
+                  chatWithUser.map((chat) => (
+                    <>
+                      {" "}
+                      <div className="chat-log__item">
+                        <h3 className="chat-log__author">
+                          {chat.from === oneUser?._id && oneUser?.username}{" "}
+                          <small>
+                            {chat.from === oneUser?._id && chat.createdAt}
+                          </small>
+                        </h3>
+                        <div className="chat-log__message">
+                          {chat.from === oneUser?._id && chat.message}
+                        </div>
+                      </div>
+                      {/* </> */}
+                      {/* <> */}
+                      <div className="chat-log__item chat-log__item--own">
+                        <h3 className="chat-log__author">
+                          {chat.from === me?._id && me?.username}{" "}
+                          <small>
+                            {chat.from === me?._id && chat.createdAt}
+                          </small>
+                        </h3>
+                        <div className="chat-log__message">
+                          {chat.from === me?._id && chat.message}
+                        </div>
+                      </div>
+                    </>
+                  ))}
               </div>
             </div>
             <div className="position-relative">
-              <div class="chat-form">
-                <div class="container ">
-                  <form class="form-horizontal">
-                    <div class="row">
-                      <div class="col-sm-10 col-xs-8">
+              <div className="chat-form">
+                <div className="container ">
+                  <form className="form-horizontal">
+                    <div className="row">
+                      <div className="col-sm-10 col-xs-8">
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           id=""
                           placeholder="Message"
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
                         />
                       </div>
-                      <div class="col-sm-2 col-xs-4">
-                        <button type="submit" class="btn btn-success btn-block">
+                      <div className="col-sm-2 col-xs-4 pl-0">
+                        <button type="submit" className="btn btn-success ">
                           Send
                         </button>
                       </div>
