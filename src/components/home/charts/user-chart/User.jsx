@@ -19,6 +19,8 @@ const User = ({ match }) => {
   const [show, setShow] = useState(false);
   const [chatWithUser, setChatWithUser] = useState([]);
   const [message, setMessage] = useState("");
+  const [clicked, setClicked] = useState(false);
+  const [chatPusher, setChatPusher] = useState(null);
 
   const me = useSelector((state) => state.user.me);
   console.log("me", me);
@@ -158,7 +160,7 @@ const User = ({ match }) => {
       }
     };
     getChatsWithUser();
-  }, []);
+  }, [clicked, chatPusher]);
   console.log("getallchat**", chatWithUser);
 
   //Pusher
@@ -171,11 +173,14 @@ const User = ({ match }) => {
     channel.bind("inserted", (newMessage) => {
       // alert(JSON.stringify(newMessage));
       setChatWithUser([...chatWithUser, newMessage]);
+      setChatPusher(newMessage);
     });
     const channell = pusher.subscribe("messages");
     channell.bind("updated", (newMessage) => {
       // alert(JSON.stringify(newMessage));
+      console.log("newMessage", newMessage);
       setChatWithUser([...chatWithUser, newMessage]);
+      setChatPusher(newMessage);
     });
 
     return () => {
@@ -184,7 +189,7 @@ const User = ({ match }) => {
       channell.unbind_all();
       channell.unsubscribe();
     };
-  }, []);
+  }, [chatWithUser]);
 
   //post chat
   const startChatWithUser = async (e) => {
@@ -206,11 +211,12 @@ const User = ({ match }) => {
         }
       );
       if (response.ok) {
+        setClicked(!clicked);
         setMessage("");
         // const res = await response.json();
-        // getChatsWithUser();
+
         // console.log(res);
-        alert("sent chat");
+        // alert("sent chat");
       } else {
         alert("chat wrong??");
       }
@@ -242,30 +248,28 @@ const User = ({ match }) => {
                   chatWithUser.map((chat) => (
                     <>
                       {" "}
-                      <div className="chat-log__item">
-                        <h3 className="chat-log__author">
-                          {chat.from === oneUser?._id && oneUser?.username}{" "}
-                          <small>
-                            {chat.from === oneUser?._id && chat.createdAt}
-                          </small>
-                        </h3>
-                        <div className="chat-log__message">
-                          {chat.from === oneUser?._id && chat.message}
+                      {chat.from === oneUser?._id && (
+                        <div className="chat-log__item">
+                          <h3 className="chat-log__author">
+                            {oneUser?.username}
+                            <small>{chat.createdAt}</small>
+                          </h3>
+                          <div className="chat-log__message">
+                            {chat.message}
+                          </div>
                         </div>
-                      </div>
-                      {/* </> */}
-                      {/* <> */}
-                      <div className="chat-log__item chat-log__item--own">
-                        <h3 className="chat-log__author">
-                          {chat.from === me?._id && me?.username}{" "}
-                          <small>
-                            {chat.from === me?._id && chat.createdAt}
-                          </small>
-                        </h3>
-                        <div className="chat-log__message">
-                          {chat.from === me?._id && chat.message}
+                      )}
+                      {chat.from === me?._id && (
+                        <div className="chat-log__item chat-log__item--own">
+                          <h3 className="chat-log__author">
+                            {me?.username}
+                            <small>{chat.createdAt}</small>
+                          </h3>
+                          <div className="chat-log__message">
+                            {chat.message}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </>
                   ))}
               </div>
