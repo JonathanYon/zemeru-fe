@@ -158,27 +158,37 @@ const User = ({ match }) => {
       }
     };
     getChatsWithUser();
-  }, [message]);
+  }, []);
   console.log("getallchat**", chatWithUser);
 
   //Pusher
   useEffect(() => {
-    const pusher = new Pusher("1454545454", {
+    const pusher = new Pusher("0fb50def5b9d8d12554b", {
       cluster: "eu",
     });
 
     const channel = pusher.subscribe("messages");
-    channel.bind("inserted", (data) => {
-      alert(JSON.stringify(data));
+    channel.bind("inserted", (newMessage) => {
+      // alert(JSON.stringify(newMessage));
+      setChatWithUser([...chatWithUser, newMessage]);
     });
     const channell = pusher.subscribe("messages");
-    channell.bind("updated", (data) => {
-      alert(JSON.stringify(data));
+    channell.bind("updated", (newMessage) => {
+      // alert(JSON.stringify(newMessage));
+      setChatWithUser([...chatWithUser, newMessage]);
     });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+      channell.unbind_all();
+      channell.unsubscribe();
+    };
   }, []);
 
   //post chat
-  const startChatWithUser = async () => {
+  const startChatWithUser = async (e) => {
+    e.preventDefault();
     const { id } = match.params;
     const payload = {
       message: message,
@@ -196,9 +206,10 @@ const User = ({ match }) => {
         }
       );
       if (response.ok) {
-        const res = await response.json();
+        setMessage("");
+        // const res = await response.json();
         // getChatsWithUser();
-        console.log(res);
+        // console.log(res);
         alert("sent chat");
       } else {
         alert("chat wrong??");
