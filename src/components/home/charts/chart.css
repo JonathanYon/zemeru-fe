@@ -90,3 +90,12 @@
   font-size: 14px;
   font-weight: bold;
 }
+.curser {
+  cursor: pointer;
+}
+.follow-token-num {
+  font-size: 12px !important;
+}
+.follow-list-bg {
+  background-color: transparent !important;
+}
