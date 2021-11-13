@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Badge, Modal } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Badge,
+  Modal,
+  ListGroup,
+} from "react-bootstrap";
 import "../chart.css";
 import UserBio from "./UserBio";
 import UserFeedCard from "./UserFeedCard";
@@ -8,6 +16,7 @@ import { BsJournalText } from "react-icons/bs";
 import { FaEnvelope } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Pusher from "pusher-js";
+import { set } from "date-fns";
 
 const User = ({ match }) => {
   const [errors, setErrors] = useState(false);
@@ -21,12 +30,40 @@ const User = ({ match }) => {
   const [message, setMessage] = useState("");
   const [clicked, setClicked] = useState(false);
   const [chatPusher, setChatPusher] = useState(null);
+  const [feed, setFeed] = useState({
+    allFeed: true,
+    userFollowers: false,
+    userFollowing: false,
+  });
+  // const [userFollowers, setUserFollowers] = useState(false);
+  // const [userFollowing, setUserFollowing] = useState(false);
 
   const me = useSelector((state) => state.user.me);
   console.log("me", me);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const feedHandleShow = () =>
+    setFeed({
+      allFeed: true,
+      userFollowers: false,
+      userFollowing: false,
+    });
+
+  const followersHandleShow = () =>
+    setFeed({
+      allFeed: false,
+      userFollowers: true,
+      userFollowing: false,
+    });
+
+  const followingHandleShow = () =>
+    setFeed({
+      allFeed: false,
+      userFollowers: false,
+      userFollowing: true,
+    });
 
   useEffect(() => {
     const getMyBlogComments = async () => {
@@ -164,32 +201,32 @@ const User = ({ match }) => {
   console.log("getallchat**", chatWithUser);
 
   //Pusher
-  useEffect(() => {
-    const pusher = new Pusher("0fb50def5b9d8d12554b", {
-      cluster: "eu",
-    });
+  // useEffect(() => {
+  //   const pusher = new Pusher("0fb50def5b9d8d12554b", {
+  //     cluster: "eu",
+  //   });
 
-    const channel = pusher.subscribe("messages");
-    channel.bind("inserted", (newMessage) => {
-      // alert(JSON.stringify(newMessage));
-      setChatWithUser([...chatWithUser, newMessage]);
-      setChatPusher(newMessage);
-    });
-    const channell = pusher.subscribe("messages");
-    channell.bind("updated", (newMessage) => {
-      // alert(JSON.stringify(newMessage));
-      console.log("newMessage", newMessage);
-      setChatWithUser([...chatWithUser, newMessage]);
-      setChatPusher(newMessage);
-    });
+  //   const channel = pusher.subscribe("messages");
+  //   channel.bind("inserted", (newMessage) => {
+  //     // alert(JSON.stringify(newMessage));
+  //     setChatWithUser([...chatWithUser, newMessage]);
+  //     setChatPusher(newMessage);
+  //   });
+  //   const channell = pusher.subscribe("messages");
+  //   channell.bind("updated", (newMessage) => {
+  //     // alert(JSON.stringify(newMessage));
+  //     console.log("newMessage", newMessage);
+  //     setChatWithUser([...chatWithUser, newMessage]);
+  //     setChatPusher(newMessage);
+  //   });
 
-    return () => {
-      channel.unbind_all();
-      channel.unsubscribe();
-      channell.unbind_all();
-      channell.unsubscribe();
-    };
-  }, [chatWithUser]);
+  //   return () => {
+  //     channel.unbind_all();
+  //     channel.unsubscribe();
+  //     channell.unbind_all();
+  //     channell.unsubscribe();
+  //   };
+  // }, [chatWithUser]);
 
   //post chat
   const startChatWithUser = async (e) => {
@@ -337,11 +374,17 @@ const User = ({ match }) => {
             </Col>
             <Col className="mt-5 position-relative">
               <div className="follow d-flex mt-5">
-                <div className="mt-4 text-white mr-5">
+                <div
+                  className="mt-4 text-white mr-5 curser"
+                  onClick={feedHandleShow}
+                >
                   <BsJournalText className=" mr-1" />
                   <strong>Featured</strong>
                 </div>
-                <div className="mt-4 text-white mr-3">
+                <div
+                  className="mt-4 text-white mr-3 curser"
+                  onClick={followersHandleShow}
+                >
                   <strong className="d-flex">
                     <span className="text-warning mr-1">
                       {oneUser?.followers.length}
@@ -349,7 +392,10 @@ const User = ({ match }) => {
                     <span>Followers</span>
                   </strong>
                 </div>
-                <div className="mt-4 text-white mr-3">
+                <div
+                  className="mt-4 text-white mr-3 curser"
+                  onClick={followingHandleShow}
+                >
                   <strong className="d-flex">
                     <span className="text-warning mr-1">
                       {oneUser?.following.length}
@@ -389,21 +435,89 @@ const User = ({ match }) => {
               editNum={noOfEdits}
             />
           </Col>
+          {/* --------------------------------------------------------------------------- */}
+
           <Col xs={8}>
-            {myComments?.commAndID.map((comment) => (
-              <UserFeedCard
-                comment={comment}
-                key={comment.id}
-                user={oneUser?.username}
-              />
-            ))}
-            {myCommentsBlog?.map((comment) => (
-              <UserFeedCard blogComment={comment} key={comment.id} />
-            ))}
-            {myComments?.lyrics &&
-              myComments?.lyrics?.map((lyr) => (
-                <UserFeedCard lyrIwrite={lyr} user={oneUser?.username} />
-              ))}
+            {feed.allFeed && (
+              <>
+                {myComments?.commAndID.map((comment) => (
+                  <UserFeedCard
+                    comment={comment}
+                    key={comment.id}
+                    user={oneUser?.username}
+                  />
+                ))}
+                {myCommentsBlog?.map((comment) => (
+                  <UserFeedCard blogComment={comment} key={comment.id} />
+                ))}
+                {myComments?.lyrics &&
+                  myComments?.lyrics?.map((lyr) => (
+                    <UserFeedCard lyrIwrite={lyr} user={oneUser?.username} />
+                  ))}
+              </>
+            )}
+            {feed.userFollowing && (
+              <ListGroup variant="flush" className="bg-transparent text-left">
+                {oneUser?.following.length > 0 ? (
+                  oneUser?.following.map((user) => (
+                    <ListGroup.Item
+                      key={user.userId._id}
+                      className="follow-list-bg"
+                    >
+                      <img
+                        src={user.userId.avatar}
+                        className="rounded-circle mr-2"
+                        height="23"
+                        width="23"
+                        alt=""
+                        loading="lazy"
+                        style={{ objectFit: "cover" }}
+                      />{" "}
+                      {user.userId.username}
+                      <small className="ml-1 follow-token-num">
+                        {user.userId.token}
+                      </small>
+                    </ListGroup.Item>
+                  ))
+                ) : (
+                  <ListGroup.Item className="follow-list-bg">
+                    <strong>{oneUser?.username}</strong> hasn't followed anyone
+                    yet!
+                  </ListGroup.Item>
+                )}
+              </ListGroup>
+            )}
+            {feed.userFollowers && (
+              <ListGroup variant="flush" className="bg-transparent text-left">
+                {oneUser?.followers.length > 0 ? (
+                  oneUser?.followers.map((user) => (
+                    <ListGroup.Item
+                      key={user.userId._id}
+                      className="follow-list-bg"
+                    >
+                      <img
+                        src={user.userId.avatar}
+                        className="rounded-circle mr-1"
+                        height="23"
+                        width="23"
+                        alt=""
+                        loading="lazy"
+                        style={{ objectFit: "cover" }}
+                      />{" "}
+                      {user.userId.username}
+                      <small className="ml-1 follow-token-num">
+                        {user.userId.token}
+                      </small>
+                    </ListGroup.Item>
+                  ))
+                ) : (
+                  <ListGroup.Item className="follow-list-bg">
+                    <strong>{oneUser?.username}</strong> doesn't have any
+                    followers yet!
+                  </ListGroup.Item>
+                )}
+              </ListGroup>
+            )}
           </Col>
         </Row>
       </Container>
