@@ -11,7 +11,7 @@ import { toggleLikeLyrics } from "../../../../Redux/action";
 const OneComment = ({ match, comment, history }) => {
   const [update, setUpdate] = useState(false);
   const [editComment, setEditComment] = useState(comment.comment);
-  const me = useSelector((state) => state.user.me);
+  const me = useSelector((state) => state.user.me._id);
   const lyricsLikes = useSelector((state) => state.liked.lyrics);
   const dispatch = useDispatch();
 
@@ -117,16 +117,10 @@ const OneComment = ({ match, comment, history }) => {
               <div
                 className="d-flex flex-row align-items-center"
                 onClick={() =>
-                  comment.userId._id === me?._id
+                  comment.userId._id === me
                     ? history.push(`/me`)
                     : history.push(`/user/${comment.userId._id}`)
                 }
-                // onClick={() =>
-                //   console.log(
-                //     "clicked user",
-                //     comment.userId._id === me?._id ? "me" : comment.userId._id
-                //   )
-                // }
               >
                 <img
                   // src="https://mdbootstrap.com/img/Photos/Avatars/img%20(4).jpg"
