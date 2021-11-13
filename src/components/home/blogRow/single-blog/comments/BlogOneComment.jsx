@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import { toggleLikeBlog } from "../../../../../Redux/action";
 
-const BlogOneComment = ({ match, comment }) => {
+const BlogOneComment = ({ match, comment, history }) => {
   const [update, setUpdate] = useState(false);
   const [editComment, setEditComment] = useState(comment.comment);
   const me = useSelector((state) => state.user.me._id);
@@ -114,12 +114,20 @@ const BlogOneComment = ({ match, comment }) => {
             <p>{comment.comment}</p>
 
             <div className="d-flex justify-content-between">
-              <div className="d-flex flex-row align-items-center">
+              <div
+                className="d-flex flex-row align-items-center"
+                onClick={() =>
+                  comment.userId._id === me
+                    ? history.push(`/me`)
+                    : history.push(`/user/${comment.userId._id}`)
+                }
+              >
                 <img
                   // src="https://mdbootstrap.com/img/Photos/Avatars/img%20(4).jpg"
                   src={comment.userId.avatar}
                   alt="avatar"
                   className="rounded-circle mr-1"
+                  onClick={() => history.push(`user/${comment.userId._id}`)}
                   style={{ width: "25px", height: "25px", objectFit: "cover" }}
                 />
 
