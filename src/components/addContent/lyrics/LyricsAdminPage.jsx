@@ -12,6 +12,8 @@ import {
 import "./add-lyrics.css";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
+import { BsCheckLg } from "react-icons/bs";
+import { ImCross } from "react-icons/im";
 
 const LyricsAdminPage = ({ match }) => {
   // const [officialL, setOfficialL] = useState();
@@ -76,7 +78,7 @@ const LyricsAdminPage = ({ match }) => {
             lyrics.map((lyr) => (
               <div className="d-flex" key={lyr._id}>
                 <ContentEditable
-                  className="mr-4 bg-success mb-3"
+                  className="mr-4 official-lyric-color mb-3"
                   html={lyr.officialLyric}
                   disabled={true}
                   // onChange={(e) => setOfficialL(e.target.value)}
@@ -98,7 +100,9 @@ const LyricsAdminPage = ({ match }) => {
                         to={`/edited/${lyr._id}/lyrics/${edited._id}`}
                         onClick={handleShow}
                       >
-                        <Button className="mr-2">Approve/Reject</Button>
+                        <Button className="mr-2">
+                          <BsCheckLg /> / <ImCross />
+                        </Button>
                       </Link>
                     </div>
                   </div>
