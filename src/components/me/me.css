@@ -22,3 +22,13 @@
 .feed-date {
   font-size: 10px;
 }
+
+.curser {
+  cursor: pointer;
+}
+.follow-token-num {
+  font-size: 12px !important;
+}
+.follow-list-bg {
+  background-color: transparent !important;
+}
