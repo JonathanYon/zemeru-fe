@@ -34,7 +34,7 @@ const SingleBlog = ({ blog }) => {
           ></div>
           <small className="blog-author">
             by <strong>{blog.authors[0].username} </strong>
-            <br />
+            {/* <br /> */}
             <small>{format(new Date(blog.createdAt), "PP")}</small>
           </small>
         </Card.Body>
