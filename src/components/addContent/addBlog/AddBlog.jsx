@@ -58,6 +58,13 @@ const AddBlog = () => {
 
         // props.history.push("/");
         const res = await response.json();
+        setContents({
+          category: "",
+          title: "",
+          cover: "",
+          youtubeLink: "",
+          content: "",
+        });
         // window.localStorage.setItem("Token", res.accessToken);
         console.log(res);
       } else {
@@ -137,7 +144,7 @@ const AddBlog = () => {
             <Button type="submit">Submit</Button>
           </Form>
         </Col>
-        <Col className="mt-5">
+        {/* <Col className="mt-5">
           <h5>First time transcribing</h5>
           <p>Here is a "How to.." guide</p>
           <ol className="text-left">
@@ -161,7 +168,7 @@ const AddBlog = () => {
               guide (here) link.
             </p>
           </ol>
-        </Col>
+        </Col> */}
       </Row>
     </Container>
   );
