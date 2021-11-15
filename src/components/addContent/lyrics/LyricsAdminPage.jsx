@@ -16,15 +16,11 @@ import { BsCheckLg } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 
 const LyricsAdminPage = ({ match }) => {
-  // const [officialL, setOfficialL] = useState();
-  // const [edit, setEdit] = useState(true);
   const [lyrics, setLyrics] = useState([]);
-  const [show, setShow] = useState(false);
+  const [change, setChange] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const getEditedLyrics = async () => {
@@ -56,7 +52,55 @@ const LyricsAdminPage = ({ match }) => {
       }
     };
     getEditedLyrics();
-  }, []);
+  }, [change]);
+
+  console.log("edit++/_", lyrics);
+
+  const deleteUserEdit = async (lId, eId) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/lyrics/reject/${lId}/admin/${eId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        setChange(!change);
+      } else {
+        alert("something wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //-------------------------
+  const updateUserEdit = async (lId, eId) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/lyrics/approve/${lId}/admin/${eId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        // history.push("/adminPage");
+        setChange(!change);
+      } else {
+        alert("something wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Container className="my-5">
@@ -96,14 +140,26 @@ const LyricsAdminPage = ({ match }) => {
                       // onChange={(e) => setOfficialL(e.target.value)}
                     />
                     <div className="mb-2">
-                      <Link
+                      {/* <Link
                         to={`/edited/${lyr._id}/lyrics/${edited._id}`}
                         onClick={handleShow}
                       >
                         <Button className="mr-2">
                           <BsCheckLg /> / <ImCross />
                         </Button>
-                      </Link>
+                      </Link> */}
+                      <Button
+                        className="mr-2"
+                        onClick={() => updateUserEdit(lyr._id, edited._id)}
+                      >
+                        <BsCheckLg />
+                      </Button>
+                      <Button
+                        className="mr-2"
+                        onClick={() => deleteUserEdit(lyr._id, edited._id)}
+                      >
+                        <ImCross />
+                      </Button>
                     </div>
                   </div>
                 ))}
