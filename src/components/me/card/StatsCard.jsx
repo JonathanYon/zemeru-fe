@@ -8,35 +8,37 @@ import { useState } from "react";
 
 const StatsCard = ({ commentNumber, lyricNum, editNum }) => {
   return (
-    <Card className="left-card mt-5 py-3">
-      <Container>
-        <Row>
-          <Col className="d-flex justify-content-lg-between">
-            <div className="mr-0 d-flex flex-column">
-              <div>
-                {commentNumber}
-                <MdComment className="ml-3 stat-icons" />
+    <>
+      <Card className="left-card mt-5 py-3">
+        <Container>
+          <Row>
+            <Col className="d-flex justify-content-lg-between">
+              <div className="mr-0 d-flex flex-column">
+                <div>
+                  {commentNumber}
+                  <MdComment className="ml-3 stat-icons" />
+                </div>
+                <small className="icon-name">Comment/Suggestion</small>
               </div>
-              <small className="icon-name">Comment/Suggestion</small>
-            </div>
-            <div className="mr-0 d-flex flex-column">
-              <div>
-                {lyricNum}
-                <IoNewspaper className="ml-3 stat-icons" />
+              <div className="mr-0 d-flex flex-column">
+                <div>
+                  {lyricNum}
+                  <IoNewspaper className="ml-3 stat-icons" />
+                </div>
+                <small className="icon-name">Transcription</small>
               </div>
-              <small className="icon-name">Transcription</small>
-            </div>
-            <div className="mr-0 d-flex flex-column">
-              <div>
-                {editNum}
-                <GrEdit className="ml-3 stat-icons" />
+              <div className="mr-0 d-flex flex-column">
+                <div>
+                  {editNum}
+                  <GrEdit className="ml-3 stat-icons" />
+                </div>
+                <small className="icon-name">Lyrics Edit</small>
               </div>
-              <small className="icon-name">Lyrics Edit</small>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </Card>
+            </Col>
+          </Row>
+        </Container>
+      </Card>
+    </>
   );
 };
 export default StatsCard;
