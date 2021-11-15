@@ -16,7 +16,9 @@ import { BsJournalText } from "react-icons/bs";
 import { FaEnvelope } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Pusher from "pusher-js";
-import { set } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
+import { es, enCA, ro, it, ptBR } from "date-fns/locale";
+import moment from "moment";
 
 const User = ({ match }) => {
   const [errors, setErrors] = useState(false);
@@ -200,7 +202,8 @@ const User = ({ match }) => {
   }, [clicked, chatPusher]);
   console.log("getallchat**", chatWithUser);
 
-  //Pusher
+  // Pusher;
+
   // useEffect(() => {
   //   const pusher = new Pusher("0fb50def5b9d8d12554b", {
   //     cluster: "eu",
@@ -271,13 +274,17 @@ const User = ({ match }) => {
         keyboard={false}
         className="chat-modal"
       >
-        <Modal.Header closeButton></Modal.Header>
+        <Modal.Header closeButton>
+          <div className="container">
+            <h6>{oneUser?.username}</h6>
+          </div>
+        </Modal.Header>
         <Modal.Body className="position-relative  chat-modal ">
-          <header className="page-header">
+          {/* <header className="page-header" closeButton>
             <div className="container">
               <h6>{oneUser?.username}</h6>
             </div>
-          </header>
+          </header> */}
           <div className="main">
             <div className="container ">
               <div className="chat-log">
@@ -289,22 +296,24 @@ const User = ({ match }) => {
                         <div className="chat-log__item">
                           <h3 className="chat-log__author">
                             {oneUser?.username}
-                            <small>{chat.createdAt}</small>
                           </h3>
                           <div className="chat-log__message">
                             {chat.message}
                           </div>
+                          <small className="when">
+                            {moment(chat.createdAt).format(" dd/MM/yyyy h:mm")}
+                          </small>
                         </div>
                       )}
                       {chat.from === me?._id && (
                         <div className="chat-log__item chat-log__item--own">
-                          <h3 className="chat-log__author">
-                            {me?.username}
-                            <small>{chat.createdAt}</small>
-                          </h3>
+                          <h3 className="chat-log__author">{me?.username}</h3>
                           <div className="chat-log__message">
                             {chat.message}
                           </div>
+                          <small className="when">
+                            {moment(chat.createdAt).format(" dd/MM/yyyy h:mm")}
+                          </small>
                         </div>
                       )}
                     </>
