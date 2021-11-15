@@ -16,6 +16,7 @@ import Lyrics from "./components/addContent/lyrics/Lyrics";
 import LyricsAdminPage from "./components/addContent/lyrics/LyricsAdminPage";
 import EditedLists from "./components/addContent/lyrics/EditedLists";
 import User from "./components/home/charts/user-chart/User";
+import MyFooter from "./components/Navbarr/MyFooter";
 
 function App() {
   const [logged, setLogged] = useState(false);
@@ -53,6 +54,7 @@ function App() {
             component={EditedLists}
           />
           {/* <Route component={NotFound} /> */}
+          <MyFooter />
         </>
       </Router>
     </div>
