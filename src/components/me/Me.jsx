@@ -15,8 +15,9 @@ import FeedCard from "./card/FeedCard";
 import LeftCard from "./card/LeftCard";
 import StatsCard from "./card/StatsCard";
 import "./me.css";
+import moment from "moment";
 
-const Me = ({ me }) => {
+const Me = ({ me, history, match }) => {
   const [avatar, setAvatar] = useState("");
   const [bio, setBio] = useState("");
   const [show, setShow] = useState(false);
@@ -202,7 +203,7 @@ const Me = ({ me }) => {
     };
     getMyBlogComments();
   }, []);
-  console.log("myCommentblog", myCommentsBlog);
+  // console.log("myCommentblog", myCommentsBlog);
 
   //get chat with this user
   useEffect(() => {
@@ -227,7 +228,7 @@ const Me = ({ me }) => {
     };
     getAllMyChats();
   }, []);
-  console.log("mychat---", myChats);
+  // console.log("mychat---", myChats);
 
   return (
     <>
@@ -283,21 +284,59 @@ const Me = ({ me }) => {
           <ListGroup>
             {myChats.map((chat) => (
               <ListGroup.Item variant="success" key={chat._id}>
-                {/* <div className="d-flex justify-content-between">
-                  <div>
-                    <img
-                      src=""
-                      className="rounded-circle mr-2"
-                      height="23"
-                      width="23"
-                      alt=""
-                      loading="lazy"
-                      style={{ objectFit: "cover" }}
-                    />
-                    <small>{chat.messages[0].message}</small>
+                {chat.messages[0].from._id !== me?._id ? (
+                  <div
+                    className="d-flex justify-content-between curser"
+                    onClick={() =>
+                      history.push(`/user/${chat.messages[0].from._id}`)
+                    }
+                  >
+                    <div className="d-flex">
+                      <img
+                        src={chat.messages[0].from.avatar}
+                        className="rounded-circle mr-2"
+                        height="40"
+                        width="40"
+                        alt=""
+                        loading="lazy"
+                        style={{ objectFit: "cover" }}
+                      />
+                      <div className="d-flex flex-column">
+                        <strong>{chat.messages[0].from.username}</strong>
+                        <small>{chat.messages[0].message}</small>
+                      </div>
+                    </div>
+                    <small>
+                      {moment(chat.createdAt).startOf("day").fromNow()}
+                    </small>
                   </div>
-                  <small>{chat.createdAt}</small>
-                </div> */}
+                ) : (
+                  <div
+                    className="d-flex justify-content-between curser"
+                    onClick={() =>
+                      history.push(`/user/${chat.messages[1].from._id}`)
+                    }
+                  >
+                    <div className="d-flex">
+                      <img
+                        src={chat.messages[1].from.avatar}
+                        className="rounded-circle mr-2"
+                        height="40"
+                        width="40"
+                        alt=""
+                        loading="lazy"
+                        style={{ objectFit: "cover" }}
+                      />
+                      <div className="d-flex flex-column">
+                        <strong>{chat.messages[1].from.username}</strong>
+                        <small>{chat.messages[1].message}</small>
+                      </div>
+                    </div>
+                    <small>
+                      {moment(chat.createdAt).startOf("day").fromNow()}
+                    </small>
+                  </div>
+                )}
               </ListGroup.Item>
             ))}
           </ListGroup>
@@ -417,7 +456,8 @@ const Me = ({ me }) => {
                   me?.following.map((user) => (
                     <ListGroup.Item
                       key={user.userId._id}
-                      className="follow-list-bg"
+                      className="follow-list-bg curser"
+                      onClick={() => history.push(`/user/${user.userId._id}`)}
                     >
                       <img
                         src={user.userId.avatar}
@@ -447,7 +487,8 @@ const Me = ({ me }) => {
                   me?.followers.map((user) => (
                     <ListGroup.Item
                       key={user.userId._id}
-                      className="follow-list-bg"
+                      className="follow-list-bg curser"
+                      onClick={() => history.push(`/user/${user.userId._id}`)}
                     >
                       <img
                         src={user.userId.avatar}
