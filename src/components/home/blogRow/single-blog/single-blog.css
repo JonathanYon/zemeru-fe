@@ -65,7 +65,7 @@
   top: 11px;
   width: 35%;
   left: 82%;
-  font-size: 2rem;
+  font-size: 10px !important;
   transform: translate(-50%, -50%);
 }
 .blog-words {
