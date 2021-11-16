@@ -6,6 +6,7 @@ import { IoNewspaper } from "react-icons/io5";
 import { GrEdit } from "react-icons/gr";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { withRouter } from "react-router";
+import moment from "moment";
 
 const FeedCard = ({ comment, lyrIwrite, blogComment, history, me }) => {
   console.log("lyrIwrotr", lyrIwrite);
@@ -45,7 +46,7 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history, me }) => {
                   <div className="d-flex flex-column">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
                     <span className="feed-date">
-                      {formatDistanceToNow(new Date(2021, 11, 7))}
+                      {formatDistanceToNow(new Date(2021, 11, 7))} ago
                     </span>
                   </div>
                 </Col>
@@ -80,7 +81,7 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history, me }) => {
                   <div className="d-flex flex-column">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
                     <span className="feed-date">
-                      {formatDistanceToNow(new Date(2021, 11, 7))}
+                      {moment(lyrIwrite.createdAt).startOf("day").fromNow()}
                     </span>
                   </div>
                 </Col>
@@ -123,7 +124,7 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history, me }) => {
                   <div className="d-flex flex-column">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
                     <span className="feed-date">
-                      {formatDistanceToNow(new Date(2021, 11, 7))}
+                      {formatDistanceToNow(new Date(2021, 11, 7))} ago
                     </span>
                   </div>
                 </Col>
