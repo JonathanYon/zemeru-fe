@@ -278,7 +278,7 @@ const Me = ({ me, history, match }) => {
 
       <Modal show={see} onHide={handleEnd}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>chats</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ListGroup>
