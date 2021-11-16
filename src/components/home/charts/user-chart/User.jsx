@@ -16,11 +16,9 @@ import { BsJournalText } from "react-icons/bs";
 import { FaEnvelope } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Pusher from "pusher-js";
-import { format, formatDistanceToNow } from "date-fns";
-import { es, enCA, ro, it, ptBR } from "date-fns/locale";
 import moment from "moment";
 
-const User = ({ match }) => {
+const User = ({ match, history }) => {
   const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [oneUser, setOneUser] = useState(null);
@@ -89,7 +87,7 @@ const User = ({ match }) => {
       }
     };
     getMyBlogComments();
-  }, [follow]);
+  }, [follow, match.params.id]);
   console.log("user", oneUser);
 
   useEffect(() => {
@@ -204,34 +202,34 @@ const User = ({ match }) => {
 
   // Pusher;
 
-  // useEffect(() => {
-  //   const pusher = new Pusher("0fb50def5b9d8d12554b", {
-  //     cluster: "eu",
-  //   });
+  useEffect(() => {
+    const pusher = new Pusher("0fb50def5b9d8d12554b", {
+      cluster: "eu",
+    });
 
-  //   const channel = pusher.subscribe("messages");
-  //   channel.bind("inserted", (newMessage) => {
-  //     // alert(JSON.stringify(newMessage));
-  //     setChatWithUser([...chatWithUser, newMessage]);
-  //     setChatPusher(newMessage);
-  //   });
-  //   const channell = pusher.subscribe("messages");
-  //   channell.bind("updated", (newMessage) => {
-  //     // alert(JSON.stringify(newMessage));
-  //     console.log("newMessage", newMessage);
-  //     setChatWithUser([...chatWithUser, newMessage]);
-  //     setChatPusher(newMessage);
-  //   });
+    const channel = pusher.subscribe("messages");
+    channel.bind("inserted", (newMessage) => {
+      // alert(JSON.stringify(newMessage));
+      setChatWithUser([...chatWithUser, newMessage]);
+      setChatPusher(newMessage);
+    });
+    const channell = pusher.subscribe("messages");
+    channell.bind("updated", (newMessage) => {
+      // alert(JSON.stringify(newMessage));
+      console.log("newMessage", newMessage);
+      setChatWithUser([...chatWithUser, newMessage]);
+      setChatPusher(newMessage);
+    });
 
-  //   return () => {
-  //     channel.unbind_all();
-  //     channel.unsubscribe();
-  //     channell.unbind_all();
-  //     channell.unsubscribe();
-  //   };
-  // }, [chatWithUser]);
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+      channell.unbind_all();
+      channell.unsubscribe();
+    };
+  }, [chatWithUser]);
 
-  //post chat
+  // post chat
   const startChatWithUser = async (e) => {
     e.preventDefault();
     const { id } = match.params;
@@ -301,7 +299,8 @@ const User = ({ match }) => {
                             {chat.message}
                           </div>
                           <small className="when">
-                            {moment(chat.createdAt).format(" dd/MM/yyyy h:mm")}
+                            {/* {moment(chat.createdAt).format(" dd/MM/yyyy h:mm")} */}
+                            {moment(chat.createdAt).startOf("day").fromNow()}
                           </small>
                         </div>
                       )}
@@ -312,7 +311,8 @@ const User = ({ match }) => {
                             {chat.message}
                           </div>
                           <small className="when">
-                            {moment(chat.createdAt).format(" dd/MM/yyyy h:mm")}
+                            {/* {moment(chat.createdAt).format(" dd/MM/yyyy h:mm")} */}
+                            {moment(chat.createdAt).startOf("day").fromNow()}
                           </small>
                         </div>
                       )}
@@ -471,7 +471,8 @@ const User = ({ match }) => {
                   oneUser?.following.map((user) => (
                     <ListGroup.Item
                       key={user.userId._id}
-                      className="follow-list-bg"
+                      className="follow-list-bg curser"
+                      onClick={() => history.push(`/user/${user.userId._id}`)}
                     >
                       <img
                         src={user.userId.avatar}
@@ -502,7 +503,8 @@ const User = ({ match }) => {
                   oneUser?.followers.map((user) => (
                     <ListGroup.Item
                       key={user.userId._id}
-                      className="follow-list-bg"
+                      className="follow-list-bg curser"
+                      onClick={() => history.push(`/user/${user.userId._id}`)}
                     >
                       <img
                         src={user.userId.avatar}
