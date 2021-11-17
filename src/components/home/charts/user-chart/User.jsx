@@ -300,7 +300,9 @@ const User = ({ match, history }) => {
                           </div>
                           <small className="when">
                             {/* {moment(chat.createdAt).format(" dd/MM/yyyy h:mm")} */}
-                            {moment(chat.createdAt).startOf("day").fromNow()}
+                            {moment(chat.createdAt).format(
+                              "YYYY/MM/DD, h:mm a"
+                            )}
                           </small>
                         </div>
                       )}
@@ -312,7 +314,9 @@ const User = ({ match, history }) => {
                           </div>
                           <small className="when">
                             {/* {moment(chat.createdAt).format(" dd/MM/yyyy h:mm")} */}
-                            {moment(chat.createdAt).startOf("day").fromNow()}
+                            {moment(chat.createdAt).format(
+                              "YYYY/MM/DD, h:mm a"
+                            )}
                           </small>
                         </div>
                       )}
