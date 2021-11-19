@@ -43,10 +43,11 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history, me }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="d-flex flex-column">
+                  <div className="d-lg-flex flex-column d-none">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
-                    <span className="feed-date">
+                    <span className="feed-date ml-0 ">
                       {formatDistanceToNow(new Date(2021, 11, 7))} ago
+                      {/* 17d */}
                     </span>
                   </div>
                 </Col>
@@ -78,9 +79,9 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history, me }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="d-flex flex-column">
+                  <div className="d-lg-flex flex-column d-none">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
-                    <span className="feed-date">
+                    <span className="feed-date d-none d-lg-block">
                       {moment(lyrIwrite.createdAt).startOf("day").fromNow()}
                     </span>
                   </div>
@@ -121,10 +122,11 @@ const FeedCard = ({ comment, lyrIwrite, blogComment, history, me }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="d-flex flex-column">
+                  <div className="d-lg-flex flex-column d-none">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
-                    <span className="feed-date">
-                      {formatDistanceToNow(new Date(2021, 11, 7))} ago
+                    <span className="feed-date ml-3">
+                      {/* {formatDistanceToNow(new Date(2021, 11, 7))} ago */}
+                      17d
                     </span>
                   </div>
                 </Col>

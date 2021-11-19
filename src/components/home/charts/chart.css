@@ -107,3 +107,11 @@
     display: none;
   }
 }
+@media only screen and (max-width: 768px) {
+  .num {
+    display: none;
+  }
+  .feed-date {
+    /* display: none; */
+  }
+}

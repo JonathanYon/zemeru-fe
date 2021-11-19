@@ -12,9 +12,9 @@ const StatsCard = ({ commentNumber, lyricNum, editNum }) => {
       <Card className="left-card mt-5 py-3">
         <Container>
           <Row>
-            <Col className="d-flex justify-content-lg-between">
+            <Col className="d-lg-flex justify-content-lg-between flex-sm-column flex-lg-row">
               <div className="mr-0 d-flex flex-column">
-                <div>
+                <div className="d-flex d-lg-block">
                   {commentNumber}
                   <MdComment className="ml-3 stat-icons" />
                 </div>

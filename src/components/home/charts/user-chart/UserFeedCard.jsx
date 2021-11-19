@@ -48,7 +48,8 @@ const UserFeedCard = ({ comment, lyrIwrite, blogComment, history, user }) => {
                   <div className="d-flex flex-column">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
                     <span className="feed-date">
-                      {formatDistanceToNow(new Date(2021, 11, 7))} ago
+                      {/* {formatDistanceToNow(new Date(2021, 11, 7))} ago */}
+                      17d
                     </span>
                   </div>
                 </Col>
@@ -129,7 +130,8 @@ const UserFeedCard = ({ comment, lyrIwrite, blogComment, history, user }) => {
                   <div className="d-flex flex-column">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
                     <span className="feed-date">
-                      {formatDistanceToNow(new Date(2021, 11, 7))} ago
+                      {/* {formatDistanceToNow(new Date(2021, 11, 7))} ago */}
+                      17d
                     </span>
                   </div>
                 </Col>
