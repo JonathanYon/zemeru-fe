@@ -373,20 +373,20 @@ const User = ({ match, history }) => {
       >
         <Container className="info-container">
           <Row style={{ height: "40vh" }}>
-            <Col>
+            <Col className="me-avatar-container">
               <Col className="position-relative d-flex">
                 <div className="text-white mt-5 d-flex">
                   <img
                     src={oneUser?.avatar}
                     alt=""
                     className="mezmur-cover mt-5 rounded-circle"
-                    style={{ height: "14vw", width: "14vw" }}
+                    // style={{ height: "14vw", width: "14vw" }}
                   />
                 </div>
               </Col>
             </Col>
             <Col className="mt-5 position-relative">
-              <div className="follow d-flex mt-5">
+              <div className="follow d-lg-flex mt-5 curser">
                 <div
                   className="mt-4 text-white mr-5 curser"
                   onClick={feedHandleShow}
@@ -436,7 +436,7 @@ const User = ({ match, history }) => {
               {follow ? "Follow" : "Following"}
             </Button>
             <Button
-              className="bg-light text-dark font-weight-bold mb-2 ml-3"
+              className="bg-light text-dark font-weight-bold mb-2 ml-lg-1"
               onClick={handleShow}
             >
               <FaEnvelope />

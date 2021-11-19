@@ -45,7 +45,7 @@ const UserFeedCard = ({ comment, lyrIwrite, blogComment, history, user }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="d-flex flex-column">
+                  <div className="d-lg-flex flex-column d-none">
                     <FaRegCalendarAlt className="mb-1 ml-3" />
                     <span className="feed-date">
                       {/* {formatDistanceToNow(new Date(2021, 11, 7))} ago */}
