@@ -75,10 +75,10 @@ const BlogContent = (props) => {
           </Col>
         </Row>
         <Row className="mb-5">
-          <Col xs={6}>
+          <Col xs={12} lg={6}>
             <BlogComments />
           </Col>
-          <Col xs={6}>
+          <Col xs={12} lg={6}>
             <SocialMedia pageURL={window.location.href} content="Blog" />
           </Col>
         </Row>
