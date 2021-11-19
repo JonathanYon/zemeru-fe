@@ -38,7 +38,7 @@ const LyricsChart = () => {
               {lyrics.map((lyric, i) => (
                 <tr key={lyric._id}>
                   <td>
-                    {i + 1}.
+                    <span className="num">{i + 1}.</span>
                     <img
                       src={lyric.coverImage}
                       alt="mezmur cover photo"
@@ -61,7 +61,7 @@ const LyricsChart = () => {
                         )}
                     </td>
                   </Link>
-                  <td>{lyric.artist}</td>
+                  <td className="num">{lyric.artist}</td>
                   <td>{lyric.mezmurType}</td>
                 </tr>
               ))}

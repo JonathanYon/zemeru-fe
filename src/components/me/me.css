@@ -32,3 +32,26 @@
 .follow-list-bg {
   background-color: transparent !important;
 }
+@media only screen and (min-width: 768px) {
+  .mezmur-cover {
+    height: 14vw;
+    width: 14vw;
+  }
+}
+@media only screen and (max-width: 768px) {
+  /* .me-avatar {
+    top: 150px;
+  } */
+  .mezmur-cover {
+    height: 27vw;
+    width: 27vw;
+  }
+  .follow {
+    position: absolute;
+    top: 17%;
+    left: 30%;
+  }
+  .me-avatar-container {
+    margin-top: 4rem;
+  }
+}

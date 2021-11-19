@@ -63,8 +63,8 @@
   margin: 0;
   position: absolute;
   top: 11px; /*this is just to make the badge smaller in netlify */
-  width: 35%;
-  left: 100%; /*this is just to make the badge alighned in netlify */
+  /* width: 35%; */
+  /* left: 100%; this is just to make the badge alighned in netlify */
   font-size: 10px !important;
   transform: translate(-50%, -50%);
 }
