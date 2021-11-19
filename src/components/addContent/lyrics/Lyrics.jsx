@@ -176,8 +176,8 @@ const Lyrics = (props) => {
             </Modal.Header>
           </Modal>
         )}
-        <Row className="d-sm-flex">
-          <Col xs={6}>
+        <Row className="d-flex flex-column flex-lg-row">
+          <Col xs={12} lg={6}>
             {errors && (
               <ListGroup className="mt-1 mx-5">
                 <ListGroup.Item variant="danger">
@@ -227,9 +227,9 @@ const Lyrics = (props) => {
               onChange={(e) => setHtml(e.target.value)}
             />
           </Col>
-          <Col xs={6}>
-            <Comments />
+          <Col xs={12} lg={6}>
             <YoutubeVideo ytVideo={yt} />
+            <Comments />
           </Col>
         </Row>
       </Container>

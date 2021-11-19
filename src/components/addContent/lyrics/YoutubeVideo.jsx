@@ -7,7 +7,7 @@ const YoutubeVideo = ({ ytVideo }) => {
 
   console.log(YTcode);
   return (
-    <Col className="mt-5  yt-video position-relative">
+    <Col className="mt-5 mb-5 yt-video position-relative">
       <iframe
         className="yt-iframe"
         width="100%"

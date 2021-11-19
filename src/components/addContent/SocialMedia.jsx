@@ -11,10 +11,10 @@ const SocialMedia = ({ pageURL, content }) => {
   return (
     <Container className="mb-5">
       <Row className="d-flex flex-column">
-        <Col xs={6} className="mb-2">
+        <Col xs={12} className="mb-2">
           <small>Share the above {content} with family and friends :)</small>
         </Col>
-        <Col xs={6}>
+        <Col xs={12}>
           <FacebookShareButton
             url={pageURL}
             quote="ግጥምታት መዛሙር ኣብ ዘመሩ"
