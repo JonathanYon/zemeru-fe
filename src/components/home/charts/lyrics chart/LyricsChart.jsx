@@ -37,7 +37,7 @@ const LyricsChart = ({ history }) => {
             <tbody className="text-left">
               {lyrics.map((lyric, i) => (
                 <tr key={lyric._id}>
-                  <td>
+                  <td className="curser">
                     <span className="num">{i + 1}.</span>
                     <img
                       src={lyric.coverImage}
@@ -51,7 +51,10 @@ const LyricsChart = ({ history }) => {
                     />
                   </td>
                   {/* <Link to={`/lyric/${lyric._id}`}> */}
-                  <td onClick={() => history.push(`/lyric/${lyric._id}`)}>
+                  <td
+                    onClick={() => history.push(`/lyric/${lyric._id}`)}
+                    className="curser"
+                  >
                     {lyric.title}{" "}
                     {me?.role === "Editor" &&
                       lyric.editedLyrics.length !== 0 && (
