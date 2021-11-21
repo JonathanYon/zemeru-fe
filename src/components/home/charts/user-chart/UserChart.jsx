@@ -65,7 +65,7 @@ const UserChart = ({ history }) => {
           <Table striped bordered hover>
             <tbody>
               {editors.map((user, i) => (
-                <tr className="d-flex justify-content-between">
+                <tr className="d-flex justify-content-between" key={i + 1}>
                   <td
                     onClick={() =>
                       user._id === me?._id

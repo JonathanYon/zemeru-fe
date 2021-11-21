@@ -115,7 +115,10 @@ const SignUp = (props) => {
                         value={info.username}
                         onChange={handleChange}
                       />
-                      <label className="form-label" for="username">
+                      <label
+                        className="form-label"
+                        //  for="username"
+                      >
                         Username
                       </label>
                     </div>
@@ -129,7 +132,10 @@ const SignUp = (props) => {
                         value={info.email}
                         onChange={handleChange}
                       />
-                      <label className="form-label" for="email">
+                      <label
+                        className="form-label"
+                        //  for="email"
+                      >
                         Email
                       </label>
                     </div>
@@ -143,7 +149,10 @@ const SignUp = (props) => {
                         value={info.password}
                         onChange={handleChange}
                       />
-                      <label className="form-label" for="password">
+                      <label
+                        className="form-label"
+                        // for="password"
+                      >
                         Password
                       </label>
                     </div>

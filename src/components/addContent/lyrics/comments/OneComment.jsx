@@ -95,7 +95,7 @@ const OneComment = ({ match, comment, history }) => {
           />
           <Button
             className="form-label mt-2"
-            for="addANote"
+            // for="addANote"
             onClick={() => updateComment(comment._id)}
           >
             Edit

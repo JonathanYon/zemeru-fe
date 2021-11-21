@@ -19,7 +19,7 @@ import SocialMedia from "../SocialMedia";
 
 const Lyrics = (props) => {
   const [lyric, setLyric] = useState(null);
-  const [html, setHtml] = useState(null);
+  const [html, setHtml] = useState("");
   const [edit, setEdit] = useState(true);
   const [yt, setYt] = useState("");
   const [loading, setLoading] = useState(false);

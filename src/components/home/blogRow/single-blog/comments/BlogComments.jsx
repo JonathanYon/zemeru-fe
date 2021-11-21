@@ -83,7 +83,7 @@ const BlogComments = (props) => {
             {commentClick && (
               <Button
                 className="form-label mt-2 mr-2 text-dark bg-light font-weight-bold"
-                for="addANote"
+                // for="addANote"
                 type="submit"
               >
                 comment
@@ -92,7 +92,7 @@ const BlogComments = (props) => {
             {commentClick && (
               <Button
                 className="form-label mt-2 text-black-50 bg-light font-weight-bold"
-                for="addANote"
+                // for="addANote"
                 type="submit"
                 onClick={() => setCommentClick(false)}
               >

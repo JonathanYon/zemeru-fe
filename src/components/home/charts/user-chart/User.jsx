@@ -113,7 +113,7 @@ const User = ({ match, history }) => {
     };
     getMyComments();
   }, []);
-  // console.log("myComments", myComments);
+  console.log("myComments", myComments);
   const noOfComments = myComments?.commAndID
     .map((ele) => ele.comments)
     .flat().length;
@@ -465,7 +465,11 @@ const User = ({ match, history }) => {
                 ))}
                 {myComments?.lyrics &&
                   myComments?.lyrics?.map((lyr) => (
-                    <UserFeedCard lyrIwrite={lyr} user={oneUser?.username} />
+                    <UserFeedCard
+                      lyrIwrite={lyr}
+                      user={oneUser?.username}
+                      key={lyr._id}
+                    />
                   ))}
               </>
             )}

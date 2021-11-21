@@ -8,9 +8,9 @@ import {
   ListGroup,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-const LyricsChart = () => {
+const LyricsChart = ({ history }) => {
   const lyrics = useSelector((state) => state.allLyrics.lyrics);
   const me = useSelector((state) => state.user.me);
   const loading = useSelector((state) => state.blogs.loading);
@@ -50,17 +50,17 @@ const LyricsChart = () => {
                       }}
                     />
                   </td>
-                  <Link to={`/lyric/${lyric._id}`}>
-                    <td>
-                      {lyric.title}{" "}
-                      {me?.role === "Editor" &&
-                        lyric.editedLyrics.length !== 0 && (
-                          <Badge variant="warning">
-                            {lyric.editedLyrics.length}
-                          </Badge>
-                        )}
-                    </td>
-                  </Link>
+                  {/* <Link to={`/lyric/${lyric._id}`}> */}
+                  <td onClick={() => history.push(`/lyric/${lyric._id}`)}>
+                    {lyric.title}{" "}
+                    {me?.role === "Editor" &&
+                      lyric.editedLyrics.length !== 0 && (
+                        <Badge variant="warning">
+                          {lyric.editedLyrics.length}
+                        </Badge>
+                      )}
+                  </td>
+                  {/* </Link> */}
                   <td className="num">{lyric.artist}</td>
                   <td>{lyric.mezmurType}</td>
                 </tr>
@@ -72,4 +72,4 @@ const LyricsChart = () => {
     </Container>
   );
 };
-export default LyricsChart;
+export default withRouter(LyricsChart);
