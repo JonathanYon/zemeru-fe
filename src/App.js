@@ -23,6 +23,7 @@ function App() {
 
   const me = useSelector((state) => state.user.me);
   console.log(me);
+  console.log(".env", process.env);
 
   return (
     <div className="App">

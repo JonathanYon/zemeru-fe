@@ -61,7 +61,7 @@ const configPersist = persistReducer(persistConfig, rootReducer);
 export const configStore = createStore(
   configPersist,
   initialState,
-  process.env.REACT_APP_DEV
+  process.env.NODE_ENV === "development"
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(thunk))
     : compose(applyMiddleware(thunk))
 );
