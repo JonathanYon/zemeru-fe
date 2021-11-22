@@ -28,15 +28,14 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Route exact path="/">
-          {me ? <Redirect to="/" /> : <Login />}
+        <Topnav logged={logged} />
+        <Route exact>
+          {me ? <Redirect to="/" /> : <Redirect to="/login" />}
         </Route>
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={SignUp} />
 
         <>
-          <Topnav logged={logged} />
-
           <Route exact path="/" component={BlogRow} />
           <Route exact path="/blogs/:id" component={BlogContent} />
           <Route
