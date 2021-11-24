@@ -13,7 +13,7 @@ import { myLogin } from "../../Redux/action";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-const Topnav = ({ props }) => {
+const Topnav = (props) => {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState([]);
   const dispatch = useDispatch();
@@ -69,6 +69,14 @@ const Topnav = ({ props }) => {
       </Popover.Content>
     </Popover>
   );
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    // localStorage.removeItem("Token");
+    // localStorage.removeItem("persist:root");
+    // props.history.push("/login");
+    window.location.reload();
+  };
 
   console.log("me", me);
   return (
@@ -177,6 +185,15 @@ const Topnav = ({ props }) => {
                   </Link>
                 )}
               </DropdownButton>
+            )}
+            {me && (
+              <button
+                type="button"
+                className="ml-1 btn border-bottom"
+                onClick={handleLogOut}
+              >
+                Sign out
+              </button>
             )}
           </ul>
         </div>
