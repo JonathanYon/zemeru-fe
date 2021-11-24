@@ -42,7 +42,7 @@ const UserChart = ({ history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(myLyrics());
+    me && dispatch(myLyrics());
   }, []);
 
   return (

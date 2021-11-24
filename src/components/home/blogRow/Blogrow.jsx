@@ -11,12 +11,14 @@ const BlogRow = () => {
   const blogs = useSelector((state) => state.blogs.articles);
   const loading = useSelector((state) => state.blogs.loading);
   const errors = useSelector((state) => state.blogs.error);
+  const me = useSelector((state) => state.user.me);
+
   // const me = useSelector((state) => state.user.me);
   console.log("...", blogs[0]);
   const dispatch = useDispatch();
   // const [blog, setBlog] = useState([]);
   useEffect(() => {
-    dispatch(myBlogs());
+    me && dispatch(myBlogs());
   }, []);
 
   return (

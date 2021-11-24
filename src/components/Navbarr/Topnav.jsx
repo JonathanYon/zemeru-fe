@@ -17,6 +17,7 @@ const Topnav = (props) => {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState([]);
   const dispatch = useDispatch();
+  const me = useSelector((state) => state.user.me);
 
   useEffect(() => {
     console.log("topnav");
@@ -49,8 +50,6 @@ const Topnav = (props) => {
     query.length > 2 && getAllLyrics();
   }, [query]);
 
-  const me = useSelector((state) => state.user.me);
-
   const popover = (
     <Popover id="popover-basic">
       <Popover.Title as="h3">Search Result</Popover.Title>
@@ -72,9 +71,6 @@ const Topnav = (props) => {
 
   const handleLogOut = () => {
     localStorage.clear();
-    // localStorage.removeItem("Token");
-    // localStorage.removeItem("persist:root");
-    // props.history.push("/login");
     window.location.reload();
   };
 
@@ -125,14 +121,14 @@ const Topnav = (props) => {
                 >
                   <img
                     src={me ? me.avatar : "https://picsum.photos/200"}
-                    className="rounded-circle mr-2"
+                    className="rounded-circle mr-2 mt-1"
                     height="25"
                     width="25"
                     alt=""
                     loading="lazy"
                     style={{ objectFit: "cover" }}
                   />
-                  <strong className="d-none d-sm-block ms-1">
+                  <strong className="d-none d-sm-block mt-1">
                     {me.username}
                   </strong>
                 </Link>
@@ -174,7 +170,7 @@ const Topnav = (props) => {
                 id="dropdown-basic-button"
                 title="Post"
                 variant="light"
-                className="border-bottom"
+                className="border-bottom mt-1"
               >
                 <Link to="/addLyrics">
                   <Dropdown.Item href="#/action-1">Add song</Dropdown.Item>
